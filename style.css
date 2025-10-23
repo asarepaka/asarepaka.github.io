@@ -1,41 +1,209 @@
 body {
-  font-family: system-ui, sans-serif;
-  line-height: 1.6;
   margin: 0;
-  background: #f7f7f7;
+  font-family: "Inter", system-ui, sans-serif;
   color: #222;
+  background: #fafafa;
 }
 
-header {
+nav.navbar {
   background: #007acc;
-  color: white;
+  padding: 1rem;
   text-align: center;
-  padding: 2rem 1rem;
 }
 
-nav a {
+nav.navbar a {
   color: white;
   text-decoration: none;
-  margin: 0 0.5rem;
+  margin: 0 1rem;
+  font-weight: bold;
 }
 
-section {
-  max-width: 800px;
-  margin: 2rem auto;
-  padding: 1rem;
+nav.navbar a:hover, nav.navbar a.active {
+  text-decoration: underline;
 }
 
-.project {
-  background: white;
-  padding: 1rem;
-  border-radius: 10px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+.hero {
+  text-align: center;
+  padding: 6rem 1rem;
+  color: white;
+  background-image: url("assets/banner.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: relative;
+}
+
+/* Optional: add a soft overlay to make text readable */
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4); /* Darkens background slightly */
+}
+
+.hero * {
+  position: relative;
+  z-index: 1; /* Keeps text above the overlay */
+}
+
+
+.hero .profile-pic {
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  border: 3px solid white;
   margin-bottom: 1rem;
 }
 
+.section {
+  padding: 3rem 1rem;
+  text-align: center;
+  max-width: 900px;
+  margin: auto;
+}
+/* Styling for the main container (the "box") */
+.section.quote {
+    /* Box appearance */
+    border: 2px solid #007bff; /* A nice blue border */
+    border-radius: 12px; /* Softly rounded corners */
+    padding: 30px; /* Space inside the box */
+    margin: 40px auto; /* Space outside the box, and centering it */
+    max-width: 700px; /* Limits the width for better readability */
+    text-align: center; /* Centers the content */
+    background-color: #f8f9fa; /* Very light grey background */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+}
+
+/* Styling for the quote text */
+.section.quote blockquote {
+    font-style: italic;
+    font-size: 1.3em;
+    margin-bottom: 20px;
+    color: #343a40; /* Darker text color */
+    border: none; /* Override default blockquote styling if any */
+}
+
+/* Styling for the author's name */
+.section.quote span {
+    display: block; /* Puts the author on a new line */
+    font-size: 0.9em;
+    font-weight: 600;
+    margin-top: 10px;
+    color: #007bff; /* Matches the border color */
+}
+
+/* Styling for the Call-to-Action button */
+.section.quote .btn {
+    display: inline-block;
+    background-color: #007bff; /* Primary button color */
+    color: white;
+    padding: 10px 25px;
+    text-decoration: none; /* Removes underline */
+    border-radius: 6px;
+    font-weight: bold;
+    transition: background-color 0.3s ease; /* Smooth hover effect */
+}
+
+.section.quote .btn:hover {
+    background-color: #0056b3; /* Darker color on hover */
+}
+.btn {
+  background: #ffde59;
+  color: #222;
+  padding: 0.7rem 1.3rem;
+  border-radius: 25px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background 0.3s;
+}
+
+.btn:hover {
+  background: #fff3a8;
+}
+
+.project-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+/* Card layout */
+.card {
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column; /* ensures content flows top-to-bottom */
+  height: 100%;
+}
+
+.card img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+}
+
+.card h3 {
+  margin: 1rem 0 0.5rem;
+}
+
+.card p {
+  padding: 0 1rem;
+  flex-grow: 1; /* pushes button to bottom */
+}
+
+.card .btn.small {
+  display: inline-block;
+  align-self: center;
+  margin: 1rem auto 1.5rem auto;
+  text-decoration: none;
+}
+
+.hobby-list {
+  list-style: none;
+  padding: 0;
+  font-size: 1.1rem;
+  line-height: 1.8;
+}
+
+/* Styles for the container to center itself on the page */
+.section.centered-cta {
+    /* Step 1: Center the *content* (the button) inside this container */
+    text-align: center; 
+    
+    /* Step 2: Define a maximum width for the container */
+    max-width: 500px; /* Adjust this value as needed, but it must be less than 100% */
+    
+    /* Step 3: Center the *container* on the page */
+    margin: 40px auto; /* 'auto' for left/right margins centers the block-level element */
+    
+    padding: 20px 0;
+}
+
+/* Button styles remain the same for appearance */
+.centered-cta .btn {
+    display: inline-block;
+    background-color: #007bff; 
+    color: white;
+    padding: 12px 30px;
+    text-decoration: none;
+    border-radius: 6px;
+    font-size: 1.1em;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.centered-cta .btn:hover {
+    background-color: #0056b3;
+}
+
 footer {
+  margin-top: auto;
   background: #007acc;
   color: white;
   text-align: center;
   padding: 1rem;
+
 }

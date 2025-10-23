@@ -1,48 +1,119 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Your Name | Data Science Portfolio</title>
+  <title>Home | Your Name</title>
   <link rel="stylesheet" href="style.css" />
 </head>
-
 <body>
-  <header>
-    <h1>Your Name</h1>
-    <p>Data Science Student | Machine Learning | Data Visualization</p>
-    <nav>
-      <a href="#projects">Projects</a> |
-      <a href="#about">About</a> |
-      <a href="#contact">Contact</a>
-    </nav>
+  <nav class="navbar">
+    <a href="index.html" class="active">Home</a>
+    <a href="about.html">About</a>
+    <a href="projects.html">Projects</a>
+    <a href="hobbies.html">Hobbies</a>
+    <a href="contact.html">Contact</a>
+  </nav>
+
+  <header class="hero">
+    <img src="assets/profile.jpeg" alt="Profile" class="profile-pic" />
+    <h1>Hi! I'm <span class="highlight">Abhishek Sarepaka</span></h1>
+
   </header>
-
-  <section id="projects">
-    <h2>Projects</h2>
-    <div class="project">
-      <h3><a href="https://github.com/yourusername/project1">Project 1</a></h3>
-      <p>Brief description of what it does and tools used.</p>
+<!-- Featured Projects -->
+<section class="section featured">
+  <h2>Featured Projects</h2>
+  <div class="project-grid">
+    <div class="card">
+      <img src="assets/ONT.jpg" alt="Project 1" />
+      <h3>Future Proofing Airport Parking at ONT</h3>
+      <p>Developed the data-driven strategy for the ONT CEO Challenge 
+        focused on maximizing the airport's primary non-aeronautical revenue. 
+        Work included analyzing usage trends and recommending strageic solutions
+        and EV/TNC infrastructure solutions to future-proof the parking system.</p>
+      <a href="projects.html" class="btn small">Learn More</a>
     </div>
-    <div class="project">
-      <h3><a href="https://github.com/yourusername/project2">Project 2</a></h3>
-      <p>Another example project summary.</p>
+
+    <div class="card">
+      <img src="assets/IBC.jpg" alt="Project 2" />
+      <h3>Transformer Outage Analysis & Prediction</h3>
+      <p>1st Place winner of the ITC 2025 Challenge where I led the development 
+        of a Random Forest ML model to predict power outage impact (CMI) and guided 
+        a multi-year strategy for critical circuit maintenance.</p>
+      <a href="projects.html" class="btn small">Learn More</a>
     </div>
-  </section>
+  </div>
+</section>
 
-  <section id="about">
-    <h2>About Me</h2>
-    <p>Hi, I'm a senior Data Science student passionate about analytics, machine learning, and data-driven storytelling.</p>
-  </section>
+<!-- Skills Section -->
+<section class="section skills">
+<div class="skills-tags-container">
 
-  <section id="contact">
-    <h2>Contact</h2>
-    <p>Email: <a href="mailto:youremail@example.com">youremail@example.com</a></p>
-    <p><a href="https://linkedin.com/in/yourprofile">LinkedIn</a> | <a href="https://github.com/yourusername">GitHub</a></p>
-  </section>
+  <div class="skill-group">
+    <h3>💻 Languages</h3>
+    <span class="skill-tag">Python,</span>
+    <span class="skill-tag">Java,</span>
+    <span class="skill-tag">C++,</span>
+    <span class="skill-tag">HTML/CSS,</span>
+    <span class="skill-tag">JavaScript</span>
+  </div>
 
-  <footer>
-    <p>© 2025 Your Name</p>
-  </footer>
+  <div class="skill-group">
+    <h3>🧠 M.L. & Modeling</h3>
+    <span class="skill-tag">Regression,</span>
+    <span class="skill-tag">Classification,</span>
+    <span class="skill-tag">Clustering,</span>
+    <span class="skill-tag">Dimensionality Reduction,</span>
+    <span class="skill-tag">Ensemble Methods,</span>
+    <span class="skill-tag">Deep Learning,</span>
+    <span class="skill-tag">Statistical Modeling</span>
+  </div>
+
+  <div class="skill-group">
+    <h3>📊 Tools & Platforms</h3>
+    <span class="skill-tag">SQL,</span>
+    <span class="skill-tag">Tableau,</span>
+    <span class="skill-tag">Power BI,</span>
+    <span class="skill-tag">ArcGIS,</span>
+    <span class="skill-tag">Excel,</span>
+    <span class="skill-tag">Figma,</span>
+    <span class="skill-tag">Azure</span>
+  </div>
+
+  <div class="skill-group">
+    <h3>📚 Python Libraries</h3>
+    <span class="skill-tag">Pandas,</span>
+    <span class="skill-tag">NumPy,</span>
+    <span class="skill-tag">Matplotlib,</span>
+    <span class="skill-tag">scikit-learn</span>
+  </div>
+
+  <div class="skill-group">
+    <h3>⚙️ Engineering Concepts</h3>
+    <span class="skill-tag">ETL Pipelines,</span>
+    <span class="skill-tag">Data Warehousing,</span>
+    <span class="skill-tag">API Integration,</span>
+    <span class="skill-tag">A/B Testing</span>
+  </div>
+
+</div>
+</section>
+
+<!-- Quote / Call to Action -->
+<section class="section quote">
+  <blockquote>
+    “The goal is to turn data into information, and information into insight.”  
+    <br><span>– Carly Fiorina</span>
+  </blockquote>
+</section>
+
+<section class="section centered-cta">
+  
+  <a href="contact.html" class="btn">Let's Connect</a>
+  
+</section>
+
+  <footer>© 2025 Abhishek Sarepaka</footer>
 </body>
 </html>
