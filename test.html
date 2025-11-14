@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Abhishek Sarepaka · Data & ML Portfolio</title>
+  <meta name="description" content="Abhishek Sarepaka — data & ML practitioner. Featured projects, skills, and ways to connect."/>
+  <link rel="canonical" href="https://example.com/" />
+  <meta property="og:title" content="Abhishek Sarepaka · Data & ML Portfolio"/>
+  <meta property="og:description" content="Featured projects, skills, and ways to connect."/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:image" content="assets/profile.jpeg"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <link rel="icon" href="assets/favicon.ico"/>
+
+  <!-- ================================================================
+       STYLESHEET
+       ================================================================ -->
+  <style>
+    /* 1) DESIGN TOKENS */
+    :root {
+      --color-bg: #ffffff;        /* flat, single-color background */
+      --color-surface: #f7f8fa;
+      --color-text: #0f172a;
+      --color-muted: #445069;
+      --color-border: #e5e7eb;
+
+      --brand-1: #2563eb;         /* blue */
+      --brand-2: #7c3aed;         /* violet */
+      --brand-grad: linear-gradient(90deg, var(--brand-1), var(--brand-2));
+
+      --ring: 0 0 0 3px rgba(37, 99, 235, 0.25);
+
+      --font-sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      --fs-xs: 0.8125rem;
+      --fs-sm: 0.9375rem;
+      --fs-base: 1rem;
+      --fs-md: 1.125rem;
+      --fs-lg: clamp(1.25rem, 2vw, 1.5rem);
+      --fs-xl: clamp(1.75rem, 3vw, 2rem);
+      --fs-2xl: clamp(2.2rem, 4vw, 2.8rem);
+
+      --sp-1: 4px; --sp-2: 8px; --sp-3: 12px; --sp-4: 16px; --sp-5: 20px; --sp-6: 24px; --sp-8: 32px; --sp-10: 40px; --sp-12: 48px;
+
+      --radius-sm: 8px; --radius-md: 14px; --radius-lg: 18px;
+      --shadow-sm: 0 3px 10px rgba(2, 6, 23, 0.06);
+      --shadow-md: 0 8px 24px rgba(2, 6, 23, 0.08);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --color-bg: #0b0c10;      /* still a single color in dark mode */
+        --color-surface: #111318;
+        --color-text: #e6e8eb;
+        --color-muted: #a3a7ad;
+        --color-border: #1f2430;
+        --ring: 0 0 0 3px rgba(124, 58, 237, 0.28);
+        --shadow-sm: 0 10px 24px rgba(0, 0, 0, 0.35);
+        --shadow-md: 0 16px 40px rgba(0, 0, 0, 0.45);
+      }
+    }
+
+    /* 2) GLOBAL */
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      font-family: var(--font-sans);
+      font-size: var(--fs-base);
+      line-height: 1.6;
+      color: var(--color-text);
+      background: var(--color-bg);   /* ← flat background (removed gradients) */
+    }
+    img { max-width: 100%; display: block; }
+    a { color: inherit; text-decoration: none; }
+    a:focus-visible, button:focus-visible { outline: none; box-shadow: var(--ring); border-radius: 8px; }
+
+    .container { max-width: 1120px; padding: 0 var(--sp-6); margin: 0 auto; }
+    .section { padding: var(--sp-12) 0; }
+
+    .skip-link { position: absolute; left: -9999px; top: auto; }
+    .skip-link:focus { left: var(--sp-6); top: var(--sp-6); background: #fff; color: #000; padding: var(--sp-3) var(--sp-4); border-radius: var(--radius-sm); box-shadow: var(--shadow-md); }
+
+    /* 3) HEADER */
+    .site-header { position: sticky; top: 0; z-index: 50; backdrop-filter: saturate(120%) blur(10px); background: color-mix(in srgb, var(--color-bg) 88%, transparent); border-bottom: 1px solid var(--color-border); }
+    .header-bar { display: flex; align-items: center; gap: var(--sp-4); padding: var(--sp-4) 0; }
+    .brand { display: flex; align-items: center; gap: var(--sp-3); font-weight: 700; }
+    .brand img { width: 36px; height: 36px; border-radius: 50%; box-shadow: var(--shadow-sm); }
+
+    .nav { margin-left: auto; display: flex; align-items: center; gap: var(--sp-2); }
+    .nav a { padding: 10px 12px; border-radius: var(--radius-sm); color: var(--color-muted); }
+    .nav a[aria-current="page"], .nav a:hover { color: var(--color-text); background: #0000000a; }
+
+    .actions { display: flex; align-items: center; gap: var(--sp-3); margin-left: var(--sp-3); }
+
+    .menu-toggle { display: none; border: 1px solid var(--color-border); background: var(--color-surface); padding: 8px 10px; border-radius: var(--radius-sm); }
+    @media (max-width: 860px) {
+      .nav { display: none; }
+      .menu-toggle { display: inline-flex; }
+      .nav.open { display: flex; position: absolute; left: 0; right: 0; top: 64px; background: var(--color-bg); padding: var(--sp-4) var(--sp-6); border-bottom: 1px solid var(--color-border); }
+    }
+
+    /* 4) BUTTONS */
+    .btn { display: inline-flex; align-items: center; gap: 10px; cursor: pointer; border: 1px solid var(--color-border); background: var(--color-surface); padding: 10px 14px; border-radius: var(--radius-md); box-shadow: var(--shadow-sm); font-weight: 600; }
+    .btn:hover { transform: translateY(-1px); box-shadow: var(--shadow-md); }
+    .btn-primary { border: none; color: #fff; background: var(--brand-grad); }
+    .btn-small { padding: 8px 12px; font-size: var(--fs-sm); }
+
+    /* 5) HERO (LIGHT, FLAT BG) */
+    .hero { padding: var(--sp-12) 0; border-bottom: 1px solid var(--color-border); }
+    .hero__wrap { display: grid; gap: var(--sp-8); align-items: center; }
+    @media (min-width: 900px) { .hero__wrap { grid-template-columns: 1.15fr .85fr; } }
+
+    .hero__content { display: grid; gap: var(--sp-4); }
+    .hero__eyebrow { display: inline-flex; align-items: center; gap: 8px; font-size: var(--fs-sm); letter-spacing: .02em; color: var(--brand-1); background: #00000008; border: 1px solid var(--color-border); padding: 6px 10px; border-radius: 999px; }
+    .hero__headline { font-size: clamp(2.2rem, 3.8vw, 3.1rem); line-height: 1.1; margin: 0; }
+    .hero__accent { background: var(--brand-grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .hero__lead { color: var(--color-muted); font-size: var(--fs-md); max-width: 70ch; margin: 0; }
+
+    .hero__bullets { list-style: none; padding: 0; margin: 0; display: grid; gap: 10px; }
+    .hero__bullets li { position: relative; padding-left: 28px; }
+    .hero__bullets li::before { content: ""; position: absolute; left: 0; top: 8px; width: 14px; height: 14px; border-radius: 50%; background: var(--brand-grad); box-shadow: 0 0 0 3px #0000000d; }
+
+    .hero__cta { display: flex; gap: var(--sp-3); flex-wrap: wrap; margin-top: var(--sp-2); }
+    .hero__meta { display: flex; flex-wrap: wrap; gap: 10px; margin-top: var(--sp-2); }
+    .hero__chip { padding: 8px 12px; border: 1px solid var(--color-border); background: var(--color-surface); border-radius: var(--radius-md); font-size: var(--fs-sm); box-shadow: var(--shadow-sm); }
+
+    .hero__media { position: relative; display: grid; place-items: center; }
+    .hero__photo { width: min(340px, 90%); aspect-ratio: 1/1; border-radius: 24px; overflow: hidden; border: 1px solid var(--color-border); box-shadow: var(--shadow-md); }
+    .hero__photo img { width: 100%; height: 100%; object-fit: cover; }
+
+    @media (max-width: 860px) {
+      .hero { padding: var(--sp-10) 0; }
+      .hero__photo { width: 72%; }
+    }
+
+    /* 6) FEATURED PROJECTS */
+    .section-header { margin-bottom: var(--sp-6); }
+    .kicker { color: var(--color-muted); font-size: var(--fs-sm); margin-bottom: var(--sp-2); }
+    .section-title { font-size: var(--fs-xl); margin: 0; }
+
+    .grid { display: grid; gap: var(--sp-5); }
+    .grid-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    @media (max-width: 860px) { .grid-2 { grid-template-columns: 1fr; } }
+
+    .card { background: var(--color-bg); border: 1px solid var(--color-border); border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-sm); transition: transform .2s ease, box-shadow .2s ease; display: flex; flex-direction: column; height: 100%; }
+    .card:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); }
+    .card__media img { width: 100%; aspect-ratio: 16/9; object-fit: cover; }
+    .card__body { padding: var(--sp-5); }
+    .card__title { margin: 0 0 var(--sp-2); font-size: var(--fs-lg); }
+    .pill-row { display: flex; gap: 8px; flex-wrap: wrap; margin: var(--sp-2) 0 var(--sp-3); }
+    .pill { font-size: var(--fs-xs); padding: 4px 10px; border-radius: 999px; background: #00000008; border: 1px solid var(--color-border); }
+    .card__text { color: var(--color-muted); margin: 0 0 var(--sp-4); }
+    .card__actions { display: flex; gap: 10px; align-items: center; }
+
+    /* 7) QUOTE & CTA */
+    blockquote { margin: 0; padding: var(--sp-6); border-left: 4px solid var(--brand-1); background: #fafbff; border-radius: var(--radius-md); }
+    blockquote p { margin: 0; font-size: var(--fs-lg); }
+    blockquote footer { margin-top: var(--sp-2); color: var(--color-muted); }
+
+    .center { display: flex; justify-content: center; align-items: center; padding: var(--sp-8) 0; }
+
+    /* 8) FOOTER */
+    footer { padding: var(--sp-6) 0; color: var(--color-muted); border-top: 1px solid var(--color-border); margin-top: var(--sp-8); }
+    .foot { display: flex; justify-content: space-between; gap: var(--sp-4); flex-wrap: wrap; }
+    .social { display: flex; gap: var(--sp-2); }
+    .icon-btn { display: inline-flex; align-items: center; justify-content: center; width: 38px; height: 38px; border-radius: var(--radius-md); border: 1px solid var(--color-border); background: var(--color-surface); }
+
+    /* 9) UTILITIES */
+    .text-center{ text-align: center; }
+    .mb-0{ margin-bottom: 0; }
+    .mt-2{ margin-top: var(--sp-2); }
+    .mb-2{ margin-bottom: var(--sp-2); }
+    .mt-4{ margin-top: var(--sp-4); }
+    .mb-4{ margin-bottom: var(--sp-4); }
+  </style>
+
+  <!-- Structured data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Abhishek Sarepaka",
+    "jobTitle": "Data & ML Engineer",
+    "url": "https://example.com/",
+    "image": "assets/profile.jpeg"
+  }
+  </script>
+</head>
+
+<body>
+  <a href="#main" class="skip-link">Skip to content</a>
+
+  <!-- HEADER -->
+  <header class="site-header" role="navigation" aria-label="Primary">
+    <div class="container header-bar">
+      <a class="brand" href="index.html" aria-current="page">
+        <img src="assets/profile.jpeg" alt="Abhishek Sarepaka" />
+        <span>Abhishek Sarepaka</span>
+      </a>
+
+      <button class="menu-toggle" id="menuToggle" aria-controls="siteNav" aria-expanded="false" aria-label="Toggle menu">☰</button>
+
+      <nav class="nav" id="siteNav">
+        <a href="index.html" aria-current="page">Home</a>
+        <a href="about.html">About</a>
+        <a href="projects.html">Projects</a>
+        <a href="hobbies.html">Hobbies</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+
+      <div class="actions">
+        <a class="btn btn-primary" href="assets/Abhishek_Sarepaka_Resume.pdf" download aria-label="Download résumé as PDF">Download Resume</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN -->
+  <main id="main" class="container">
+    <!-- HERO (light, flat background) -->
+    <section class="hero" aria-labelledby="intro">
+      <div class="hero__wrap">
+        <div class="hero__content">
+          <span class="hero__eyebrow">Data &amp; ML Engineer</span>
+
+          <h1 id="intro" class="hero__headline">Data to <span class="hero__accent">Impact</span></h1>
+
+          <p class="hero__lead">
+            I build end‑to‑end ML systems and data products that actually ship — from automated pipelines to decision‑ready dashboards.
+          </p>
+
+          <!-- Résumé highlights pulled into concise bullets -->
+          <ul class="hero__bullets" aria-label="Highlights">
+            <li>Avanade: automated ML workflows and cross‑platform pipelines; Power BI with 12‑hour refresh cycles for finance.</li>
+            <li>Navi Technologies: 5+ source ingestion pipelines; 35% lower data latency; UX insights that lifted engagement by 15%.</li>
+            <li>Boeing: led 7‑person analysis; 1M+ flight records across 40 countries; demand forecasts and recovery tracking.</li>
+            <li>Research: web‑scale scraping; GNN + GraphX on 10k+ interactions; identified top 5% influential users.</li>
+            <li>Wins: ITC ’25 & ’24 (1st), DS&AI Hackathon (3rd), ITC ’23 (3rd). </li>
+            <li>Leadership: GDSC Marketing, MISSA Director of Data Analytics, AKPSI Professional Development.</li>
+          </ul>
+
+          <div class="hero__cta">
+            <a class="btn btn-primary" href="projects.html">View Projects</a>
+            <a class="btn" href="assets/Abhishek_Sarepaka_Resume.pdf" download>Download Résumé</a>
+          </div>
+
+          <div class="hero__meta" role="group" aria-label="Quick stats">
+            <div class="hero__chip"><strong>1M+</strong> rows analyzed (Boeing)</div>
+            <div class="hero__chip"><strong>35%</strong> lower data latency</div>
+            <div class="hero__chip"><strong>12‑hr</strong> live refresh BI</div>
+          </div>
+        </div>
+
+        <div class="hero__media" aria-hidden="true">
+          <div class="hero__photo">
+            <img src="assets/profile.jpeg" alt="" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FEATURED PROJECTS -->
+    <section class="section" aria-labelledby="featured">
+      <div class="section-header">
+        <h2 id="featured" class="section-title mb-0">Featured Projects</h2>
+      </div>
+
+      <div class="grid grid-2">
+        <!-- Project 1 -->
+        <article class="card" aria-labelledby="p1-title">
+          <div class="card__media">
+            <img src="assets/ONT.jpeg" alt="Aerial photo of ONT parking facilities" loading="lazy" />
+          </div>
+          <div class="card__body">
+            <h3 id="p1-title" class="card__title">Future‑Proofing Airport Parking at ONT</h3>
+            <div class="pill-row">
+              <span class="pill">Strategy</span>
+              <span class="pill">Forecasting</span>
+              <span class="pill">EV/TNC</span>
+            </div>
+            <p class="card__text">Built a data‑driven plan to maximize non‑aeronautical revenue: analyzed usage trends, capacity bottlenecks, and recommended strategic EV/TNC infrastructure to future‑proof parking.</p>
+            <div class="card__actions">
+              <a href="projects.html" class="btn btn-small" aria-label="Learn more about the ONT project">Case Study</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Project 2 -->
+        <article class="card" aria-labelledby="p2-title">
+          <div class="card__media">
+            <img src="assets/ITC-1st.jpeg" alt="Transformer and grid visualization" loading="lazy" />
+          </div>
+          <div class="card__body">
+            <h3 id="p2-title" class="card__title">Transformer Outage Analysis &amp; Prediction</h3>
+            <div class="pill-row">
+              <span class="pill">Random Forest</span>
+              <span class="pill">CMI Prediction</span>
+              <span class="pill">MLOps</span>
+            </div>
+            <p class="card__text">Led a 1st‑place ITC 2025 model predicting customer minutes interrupted (CMI) and guiding a multi‑year strategy for critical circuit maintenance.</p>
+            <div class="card__actions">
+              <a href="projects.html" class="btn btn-small" aria-label="Learn more about the outage prediction project">Case Study</a>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- SKILLS -->
+    <section class="section" aria-labelledby="skills">
+      <div class="section-header">
+        <h2 id="skills" class="section-title mb-0">Skills</h2>
+      </div>
+
+      <div class="grid grid-2">
+        <article class="card" aria-labelledby="skills-lang">
+          <div class="card__body">
+            <h3 id="skills-lang" class="card__title">💻 Languages</h3>
+            <div class="pill-row">
+              <span class="pill">Python</span>
+              <span class="pill">Java</span>
+              <span class="pill">C++</span>
+              <span class="pill">HTML/CSS</span>
+              <span class="pill">JavaScript</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="card" aria-labelledby="skills-ml">
+          <div class="card__body">
+            <h3 id="skills-ml" class="card__title">🧠 ML &amp; Modeling</h3>
+            <div class="pill-row">
+              <span class="pill">Regression</span>
+              <span class="pill">Classification</span>
+              <span class="pill">Clustering</span>
+              <span class="pill">Dimensionality Reduction</span>
+              <span class="pill">Ensembles</span>
+              <span class="pill">Deep Learning</span>
+              <span class="pill">Statistical Modeling</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="card" aria-labelledby="skills-tools">
+          <div class="card__body">
+            <h3 id="skills-tools" class="card__title">📊 Tools &amp; Platforms</h3>
+            <div class="pill-row">
+              <span class="pill">SQL</span>
+              <span class="pill">Tableau</span>
+              <span class="pill">Power BI</span>
+              <span class="pill">ArcGIS</span>
+              <span class="pill">Excel</span>
+              <span class="pill">Figma</span>
+              <span class="pill">Azure</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="card" aria-labelledby="skills-pylibs">
+          <div class="card__body">
+            <h3 id="skills-pylibs" class="card__title">📚 Python Libraries</h3>
+            <div class="pill-row">
+              <span class="pill">pandas</span>
+              <span class="pill">NumPy</span>
+              <span class="pill">Matplotlib</span>
+              <span class="pill">scikit-learn</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="card" aria-labelledby="skills-eng">
+          <div class="card__body">
+            <h3 id="skills-eng" class="card__title">⚙️ Engineering Concepts</h3>
+            <div class="pill-row">
+              <span class="pill">ETL Pipelines</span>
+              <span class="pill">Data Warehousing</span>
+              <span class="pill">API Integration</span>
+              <span class="pill">A/B Testing</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="card" aria-labelledby="skills-behavior">
+          <div class="card__body">
+            <h3 id="skills-behavior" class="card__title">🤝 Behavioral Skills</h3>
+            <div class="pill-row">
+              <span class="pill">Leadership</span>
+              <span class="pill">Team Collaboration</span>
+              <span class="pill">Communication</span>
+              <span class="pill">Adaptability</span>
+              <span class="pill">Problem Solving</span>
+              <span class="pill">Critical Thinking</span>
+              <span class="pill">Time Management</span>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- QUOTE -->
+ <section class="section" aria-label="Favorite quote">
+<blockquote>
+<p>“The goal is to turn data into information, and information into insight.”</p>
+<footer>— Carly Fiorina</footer>
+</blockquote>
+</section>
+
+    <!-- CTA -->
+    <section class="center">
+      <a href="contact.html" class="btn btn-primary">Let’s work together</a>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container foot">
+      <small>© 2025 Abhishek Sarepaka</small>
+      <div class="social" aria-label="Social links">
+        <a class="icon-btn" href="https://www.linkedin.com/" aria-label="LinkedIn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.94 8.5H3.56V21h3.38V8.5zM5.25 3a2 2 0 1 0 .01 4 2 2 0 0 0-.01-4zM21 21h-3.38v-6.52c0-3.9-4.62-3.6-4.62 0V21H9.62V8.5H13v1.82c1.58-2.92 8-3.14 8 2.79V21z"/></svg>
+        </a>
+        <a class="icon-btn" href="https://github.com/" aria-label="GitHub">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5A11.5 11.5 0 0 0 .5 12a11.5 11.5 0 0 0 7.86 10.95c.58.1.79-.25.79-.56v-2.2c-3.2.7-3.87-1.37-3.87-1.37-.53-1.34-1.3-1.7-1.3-1.7-1.06-.72.08-.7.08-.7 1.17.08 1.79 1.2 1.79 1.2 1.04 1.78 2.74 1.26 3.4.96.1-.76.41-1.26.75-1.55-2.56-.29-5.25-1.28-5.25-5.68 0-1.25.45-2.28 1.19-3.08-.12-.29-.52-1.46.11-3.04 0 0 .98-.31 3.2 1.18a11.1 11.1 0 0 1 5.82 0c2.22-1.49 3.2-1.18 3.2-1.18.63 1.58.23 2.75.11 3.04.74.8 1.19 1.83 1.19 3.08 0 4.42-2.7 5.38-5.27 5.67.42.36.8 1.07.8 2.16v3.2c0 .31.2.67.8.56A11.5 11.5 0 0 0 23.5 12 11.5 11.5 0 0 0 12 .5z"/></svg>
+        </a>
+        <a class="icon-btn" href="mailto:you@example.com" aria-label="Email">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 13.065 1.5 6.75V18A2.25 2.25 0 0 0 3.75 20.25h16.5A2.25 2.25 0 0 0 22.5 18V6.75L12 13.065z"/><path d="M21 5.25H3L12 11.25 21 5.25z"/></svg>
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- SCRIPTS -->
+  <script>
+    // Mobile menu toggle
+    const menuToggle = document.getElementById('menuToggle');
+    const siteNav = document.getElementById('siteNav');
+    if (menuToggle && siteNav) {
+      menuToggle.addEventListener('click', () => {
+        const isOpen = siteNav.classList.toggle('open');
+        menuToggle.setAttribute('aria-expanded', String(isOpen));
+      });
+    }
+  </script>
+</body>
+</html>

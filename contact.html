@@ -1,31 +1,336 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Contact | Your Name</title>
-  <link rel="stylesheet" href="style.css" />
-</head>
-<body>
-  <nav class="navbar">
-    <a href="index.html">Home</a>
-    <a href="about.html">About</a>
-    <a href="projects.html">Projects</a>
-    <a href="hobbies.html">Hobbies</a>
-    <a href="contact.html" class="active">Contact</a>
-  </nav>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Contact · Abhishek Sarepaka</title>
+    <meta name="description" content="Get in touch with Abhishek Sarepaka — Data & ML Engineer. Let's talk about projects, collaborations, or opportunities." />
+    <link rel="icon" href="assets/favicon.ico" />
 
-  <section class="section contact">
-    <h1>Contact Me</h1>
-    <p>I’d love to connect! Reach out to discuss projects, collaborations, or opportunities.</p>
+    <style>
+      /* ============================== DESIGN TOKENS ============================== */
+      :root {
+        --color-bg: #ffffff;
+        --color-surface: #f7f8fa;
+        --color-text: #0f172a;
+        --color-muted: #4b5563;
+        --color-border: #e5e7eb;
 
-    <div class="contact-links">
-      <a href="mailto:youremail@example.com" class="btn">Email Me</a>
-      <a href="https://linkedin.com/in/yourprofile" class="btn">LinkedIn</a>
-      <a href="https://github.com/yourusername" class="btn">GitHub</a>
-    </div>
-  </section>
+        --brand-1: #2563eb;
+        --brand-2: #7c3aed;
+        --brand-3: #14b8a6;
+        --brand-grad: linear-gradient(90deg, var(--brand-1), var(--brand-2));
+        --brand-grad-2: radial-gradient(1200px 600px at 10% -10%, #93c5fd33 0%, transparent 60%),
+          radial-gradient(1200px 600px at 110% 10%, #c4b5fd33 0%, transparent 60%);
 
-  <footer>© 2025 Your Name</footer>
-</body>
+        --ring: 0 0 0 3px rgba(37, 99, 235, 0.25);
+
+        --font-sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+        --fs-xs: 0.8125rem;
+        --fs-sm: 0.9375rem;
+        --fs-base: 1rem;
+        --fs-md: 1.125rem;
+        --fs-lg: 1.25rem;
+        --fs-xl: 2rem;
+        --fs-2xl: clamp(2.2rem, 4vw, 2.8rem);
+        --fs-3xl: clamp(2.6rem, 6vw, 3.4rem);
+
+        --sp-2: 8px;
+        --sp-3: 12px;
+        --sp-4: 16px;
+        --sp-6: 24px;
+        --sp-8: 32px;
+        --sp-10: 40px;
+        --sp-12: 48px;
+        --sp-16: 64px;
+
+        --radius-sm: 8px;
+        --radius-md: 14px;
+        --radius-lg: 18px;
+        --radius-xl: 26px;
+        --shadow-sm: 0 3px 10px rgba(0, 0, 0, 0.08);
+        --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.1);
+        --shadow-lg: 0 30px 70px rgba(0, 0, 0, 0.18);
+      }
+
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --color-bg: #0b0c10;
+          --color-surface: #111318;
+          --color-text: #e6e8eb;
+          --color-muted: #a3a7ad;
+          --color-border: #1f2430;
+          --ring: 0 0 0 3px rgba(124, 58, 237, 0.28);
+          --shadow-sm: 0 10px 24px rgba(0, 0, 0, 0.35);
+          --shadow-md: 0 16px 40px rgba(0, 0, 0, 0.45);
+          --shadow-lg: 0 40px 90px rgba(0, 0, 0, 0.6);
+        }
+      }
+
+      /* ============================== GLOBAL ============================== */
+      * { box-sizing: border-box; }
+      html, body { height: 100%; }
+      body {
+        margin: 0;
+        font-family: var(--font-sans);
+        font-size: var(--fs-base);
+        line-height: 1.6;
+        color: var(--color-text);
+        background: var(--color-bg);
+        background-image: var(--brand-grad-2);
+        background-attachment: fixed;
+      }
+      img { max-width: 100%; display: block; }
+      a { color: inherit; text-decoration: none; }
+      a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible {
+        outline: none; box-shadow: var(--ring); border-radius: 8px;
+      }
+
+      .container { max-width: 1120px; padding: 0 var(--sp-6); margin: 0 auto; }
+      .section { padding: var(--sp-12) 0; }
+
+      /* ============================== HEADER ============================== */
+      header.site-header {
+        position: sticky; top: 0; z-index: 50;
+        backdrop-filter: saturate(120%) blur(10px);
+        background: color-mix(in srgb, var(--color-bg) 88%, transparent);
+        border-bottom: 1px solid var(--color-border);
+      }
+      .header-bar { display: flex; align-items: center; gap: var(--sp-4); padding: var(--sp-4) 0; }
+      .brand { display: flex; align-items: center; gap: var(--sp-3); font-weight: 700; }
+      .brand img { width: 36px; height: 36px; border-radius: 50%; box-shadow: var(--shadow-sm); }
+
+      nav.nav { margin-left: auto; display: flex; align-items: center; gap: var(--sp-2); }
+      .nav a { padding: 10px 12px; border-radius: var(--radius-sm); color: var(--color-muted); }
+      .nav a[aria-current="page"], .nav a:hover { color: var(--color-text); background: #0000000a; }
+
+      .actions { display: flex; align-items: center; gap: var(--sp-3); margin-left: var(--sp-3); }
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  border: none; /* remove border to match Send Email */
+  color: #fff; /* white text */
+  background: var(--brand-grad); /* gradient background */
+  padding: 10px 14px;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  font-weight: 600;
+  transition: transform 0.15s ease, box-shadow 0.2s ease;
+}
+
+.btn:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+
+/* Optional: remove .btn-primary since it’s now redundant */
+.btn-primary {
+  background: var(--brand-grad);
+}
+
+      .btn-ghost { background: transparent; border-color: #00000022; }
+      .btn-small { padding: 8px 12px; font-size: var(--fs-sm); }
+
+      .menu-toggle { display: none; border: 1px solid var(--color-border); background: var(--color-surface); padding: 8px 10px; border-radius: var(--radius-sm); }
+      @media (max-width: 860px) {
+        .nav { display: none; }
+        .menu-toggle { display: inline-flex; }
+        .nav.open { display: flex; position: absolute; left: 0; right: 0; top: 64px; background: var(--color-bg); padding: var(--sp-4) var(--sp-6); border-bottom: 1px solid var(--color-border); }
+      }
+
+      /* ============================== HERO ============================== */
+      .banner { position: relative; width: 100%; height: 56vh; background: url("assets/banner.jpg") center/cover no-repeat; border-bottom: 1px solid var(--color-border); box-shadow: var(--shadow-md); overflow: hidden; isolation: isolate; }
+      .banner::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, #00000066 0%, #00000033 30%, transparent 60%), radial-gradient(800px 400px at 80% -10%, #00000055 0%, transparent 70%); mix-blend-mode: multiply; }
+      .hero-content { position: relative; z-index: 1; color: #fff; height: 100%; display: grid; place-items: center; text-align: center; padding: 0 var(--sp-6); }
+      .tag { display: inline-flex; gap: 8px; align-items: center; background: linear-gradient(90deg, #0ea5e9, #8b5cf6); color: #000; font-weight: 700; border-radius: 999px; padding: 6px 10px; }
+      .hero-title { font-size: var(--fs-3xl); line-height: 1.1; margin: var(--sp-4) 0 var(--sp-3); }
+      .gradient-text { background: var(--brand-grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
+
+      .orb { position: absolute; border-radius: 999px; filter: blur(40px); opacity: 0.5; }
+      .orb.one { width: 240px; height: 240px; left: -60px; top: 20%; background: #60a5fa66; animation: float 16s ease-in-out infinite; }
+      .orb.two { width: 200px; height: 200px; right: -40px; top: 10%; background: #a78bfa66; animation: float 18s ease-in-out infinite reverse; }
+      @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(22px); } }
+
+      /* ============================== UTILITIES ============================== */
+      .grid { display: grid; gap: var(--sp-6); }
+      .grid-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      @media (max-width: 860px) { .grid-2 { grid-template-columns: 1fr; } }
+
+      .card { background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-lg); padding: var(--sp-6); box-shadow: var(--shadow-sm); transition: transform 0.15s ease, box-shadow 0.2s ease; }
+      .card:hover { box-shadow: var(--shadow-md); transform: translateY(-1px); }
+      .card .eyebrow { font-size: var(--fs-xs); letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-muted); }
+      .card h3 { margin: 6px 0 8px; font-size: var(--fs-lg); }
+
+      .reveal { opacity: 0; transform: translateY(12px); transition: opacity 0.6s ease, transform 0.6s ease; }
+      .reveal.in { opacity: 1; transform: none; }
+
+      .field { display: grid; gap: 6px; }
+      label { font-weight: 600; font-size: var(--fs-sm); }
+      input, textarea, select { width: 100%; background: var(--color-bg); border: 1px solid var(--color-border); border-radius: var(--radius-md); padding: 12px 14px; font: inherit; color: var(--color-text); }
+      textarea { min-height: 150px; resize: vertical; }
+      .row { display: grid; gap: var(--sp-4); grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      @media (max-width: 640px) { .row { grid-template-columns: 1fr; } }
+
+      .muted { color: var(--color-muted); font-size: var(--fs-sm); }
+
+      blockquote { margin: var(--sp-8) auto; padding: var(--sp-6); border-left: 4px solid var(--brand-1); background: var(--color-surface); border-radius: var(--radius-md); text-align: center; max-width: 800px; font-style: italic; }
+
+      footer { padding: var(--sp-12) 0 var(--sp-6); color: var(--color-muted); }
+    </style>
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Abhishek Sarepaka",
+        "jobTitle": "Data & ML Engineer",
+        "url": "https://example.com/contact.html",
+        "image": "assets/profile.jpeg",
+        "email": "mailto:sarepakaabhishek@gmail.com",
+        "sameAs": [
+          "https://www.linkedin.com/in/abhishek-sarepaka/",
+          "https://github.com/asarepaka"
+        ]
+      }
+    </script>
+  </head>
+  <body>
+    <!-- ============================== HEADER ============================== -->
+    <header class="site-header" role="banner" aria-label="Site header">
+      <div class="container header-bar">
+        <a class="brand" href="index.html">
+          <img loading="lazy" src="assets/profile.jpeg" alt="Portrait of Abhishek Sarepaka" />
+          <span>Abhishek Sarepaka</span>
+        </a>
+
+        <button class="menu-toggle" id="menuToggle" aria-controls="siteNav" aria-expanded="false" aria-label="Toggle navigation menu">☰</button>
+
+        <nav class="nav" id="siteNav" role="navigation" aria-label="Primary">
+          <a href="index.html">Home</a>
+          <a href="about.html">About</a>
+          <a href="projects.html">Projects</a>
+          <a href="hobbies.html">Hobbies</a>
+          <a href="contact.html" aria-current="page">Contact</a>
+        </nav>
+
+        <div class="actions">
+          <a class="btn btn-primary" href="assets/Abhishek_Sarepaka_Resume.pdf" download aria-label="Download résumé as PDF">Download Resume</a>
+        </div>
+      </div>
+    </header>
+    <!-- ============================== MAIN ============================== -->
+    <main id="main" class="container section" aria-label="Contact methods">
+      <section class="card reveal" aria-labelledby="contact-title">
+        <div class="eyebrow">Contact</div>
+
+
+        <div class="grid" style="gap:16px; margin-top:16px;">
+          <div class="card" style="display:flex; align-items:center; justify-content:space-between;">
+            <div>
+              <h3 style="margin:0 0 4px; font-size: var(--fs-md);">Email</h3>
+              <p class="muted" style="margin:0;">sarepakaabhishek@gmail.com</p>
+            </div>
+            <a class="btn btn-primary" href="mailto:sarepakaabhishek@gmail.com?subject=Hello%20Abhishek">Send Email</a>
+          </div>
+
+          <div class="card" style="display:flex; align-items:center; justify-content:space-between;">
+            <div>
+              <h3 style="margin:0 0 4px; font-size: var(--fs-md);">Phone</h3>
+              <p class="muted" style="margin:0;">(925)-364-0774</p>
+            </div>
+            <a class="btn" href="tel:+1">Call</a>
+          </div>
+
+          <div class="card" style="display:flex; align-items:center; justify-content:space-between;">
+            <div>
+              <h3 style="margin:0 0 4px; font-size: var(--fs-md);">LinkedIn</h3>
+              <p class="muted" style="margin:0;">linkedin.com/in/abhishek-sarepaka</p>
+            </div>
+            <a class="btn" href="https://www.linkedin.com/in/abhishek-sarepaka/" target="_blank" rel="noopener">Open</a>
+          </div>
+
+          <div class="card" style="display:flex; align-items:center; justify-content:space-between;">
+            <div>
+              <h3 style="margin:0 0 4px; font-size: var(--fs-md);">GitHub</h3>
+              <p class="muted" style="margin:0;">github.com/asarepaka</p>
+            </div>
+            <a class="btn" href="https://github.com/asarepaka" target="_blank" rel="noopener">Open</a>
+          </div>
+
+          <div class="card" style="display:flex; align-items:center; justify-content:space-between;">
+            <div>
+              <h3 style="margin:0 0 4px; font-size: var(--fs-md);">Resume</h3>
+              <p class="muted" style="margin:0;">Download a PDF copy</p>
+            </div>
+            <a class="btn" href="projects/Abhishek Sarepaka Resume .pdf" download>Download</a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- ============================== FOOTER ============================== -->
+    <footer class="container section" style="padding-top: 0;">
+      <p style="text-align: center; color: var(--color-muted); margin-top: var(--sp-8);">© <span id="y"></span> Abhishek Sarepaka</p>
+    </footer>
+
+    <!-- ============================== SCRIPTS ============================== -->
+    <script>
+      // Mobile menu toggle
+      const menuToggle = document.getElementById('menuToggle');
+      const siteNav = document.getElementById('siteNav');
+      if (menuToggle && siteNav) {
+        menuToggle.addEventListener('click', () => {
+          const isOpen = siteNav.classList.toggle('open');
+          menuToggle.setAttribute('aria-expanded', String(isOpen));
+        });
+      }
+
+      // Year
+      document.getElementById('y').textContent = new Date().getFullYear();
+
+      // Scroll reveals
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            e.target.classList.add('in');
+            io.unobserve(e.target);
+          }
+        });
+      }, { threshold: 0.16 });
+      document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
+
+      // Basic client-side validation + mailto fallback
+      const form = document.getElementById('contactForm');
+      const statusEl = document.getElementById('formStatus');
+      form?.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const data = new FormData(form);
+
+        // Honeypot check
+        if ((data.get('company') || '').toString().trim() !== '') {
+          statusEl.textContent = 'Submission blocked.';
+          return;
+        }
+
+        const name = (data.get('name') || '').toString().trim();
+        const email = (data.get('email') || '').toString().trim();
+        const subject = (data.get('subject') || '').toString().trim() || 'Message from portfolio site';
+        const reason = (data.get('reason') || '').toString().trim();
+        const message = (data.get('message') || '').toString().trim();
+
+        if (!name || !email || !message) {
+          statusEl.textContent = 'Please complete all required fields.';
+          return;
+        }
+
+        // Construct mailto body
+        const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\nReason: ${reason}\n\n${message}`);
+        const mailto = `mailto:sarepakaabhishek@gmail.com?subject=${encodeURIComponent(subject)}&body=${body}`;
+        window.location.href = mailto;
+        statusEl.textContent = 'Opening your email client…';
+      });
+    </script>
+  </body>
 </html>

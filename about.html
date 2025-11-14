@@ -1,32 +1,830 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>About | Your Name</title>
-  <link rel="stylesheet" href="style.css" />
-</head>
-<body>
-  <nav class="navbar">
-    <a href="index.html">Home</a>
-    <a href="about.html" class="active">About</a>
-    <a href="projects.html">Projects</a>
-    <a href="hobbies.html">Hobbies</a>
-    <a href="contact.html">Contact</a>
-  </nav>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>About Me · Abhishek Sarepaka</title>
+    <meta name="description" content="Learn more about Abhishek Sarepaka — a data and machine learning engineer passionate about building intelligent systems that drive measurable business impact." />
+    <link rel="icon" href="assets/favicon.ico" />
 
-  <section class="section about">
-    <h1>About Me</h1>
-    <p>
-      I'm a senior studying <strong>Data Science</strong> passionate about turning data into insights.
-      My work blends statistics, machine learning, and data visualization to solve real-world problems.
-    </p>
-    <p>
-      I love working with <strong>Python, SQL, scikit-learn,</strong> and <strong>Tableau</strong>.
-      My goal is to build intelligent, data-driven systems that make an impact.
-    </p>
-  </section>
+    <style>
+      /* ============================== DESIGN TOKENS ============================== */
+      :root {
+        --color-bg: #ffffff;
+        --color-surface: #f7f8fa;
+        --color-text: #0f172a;
+        --color-muted: #4b5563;
+        --color-border: #e5e7eb;
 
-  <footer>© 2025 Your Name</footer>
-</body>
+        --brand-1: #2563eb;
+        --brand-2: #7c3aed;
+        --brand-3: #14b8a6;
+        --brand-grad: linear-gradient(90deg, var(--brand-1), var(--brand-2));
+        --brand-grad-2: radial-gradient(1200px 600px at 10% -10%, #93c5fd33 0%, transparent 60%),
+          radial-gradient(1200px 600px at 110% 10%, #c4b5fd33 0%, transparent 60%);
+
+        --ring: 0 0 0 3px rgba(37, 99, 235, 0.25);
+
+        --font-sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+        --fs-xs: 0.8125rem;
+        --fs-sm: 0.9375rem;
+        --fs-base: 1rem;
+        --fs-md: 1.125rem;
+        --fs-lg: 1.25rem;
+        --fs-xl: 2rem;
+        --fs-2xl: clamp(2.2rem, 4vw, 2.8rem);
+        --fs-3xl: clamp(2.6rem, 6vw, 3.4rem);
+
+        --sp-2: 8px;
+        --sp-3: 12px;
+        --sp-4: 16px;
+        --sp-6: 24px;
+        --sp-8: 32px;
+        --sp-10: 40px;
+        --sp-12: 48px;
+        --sp-16: 64px;
+
+        --radius-sm: 8px;
+        --radius-md: 14px;
+        --radius-lg: 18px;
+        --radius-xl: 26px;
+        --shadow-sm: 0 3px 10px rgba(0, 0, 0, 0.08);
+        --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.1);
+        --shadow-lg: 0 30px 70px rgba(0, 0, 0, 0.18);
+      }
+
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --color-bg: #0b0c10;
+          --color-surface: #111318;
+          --color-text: #e6e8eb;
+          --color-muted: #a3a7ad;
+          --color-border: #1f2430;
+          --ring: 0 0 0 3px rgba(124, 58, 237, 0.28);
+          --shadow-sm: 0 10px 24px rgba(0, 0, 0, 0.35);
+          --shadow-md: 0 16px 40px rgba(0, 0, 0, 0.45);
+          --shadow-lg: 0 40px 90px rgba(0, 0, 0, 0.6);
+        }
+      }
+
+      /* ============================== GLOBAL ============================== */
+      * {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        height: 100%;
+      }
+      body {
+        margin: 0;
+        font-family: var(--font-sans);
+        font-size: var(--fs-base);
+        line-height: 1.6;
+        color: var(--color-text);
+        background: var(--color-bg);
+        background-image: var(--brand-grad-2);
+        background-attachment: fixed;
+      }
+      img {
+        max-width: 100%;
+        display: block;
+      }
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+      a:focus-visible,
+      button:focus-visible {
+        outline: none;
+        box-shadow: var(--ring);
+        border-radius: 8px;
+      }
+
+      .container {
+        max-width: 1120px;
+        padding: 0 var(--sp-6);
+        margin: 0 auto;
+      }
+      .section {
+        padding: var(--sp-12) 0;
+      }
+
+      /* ============================== HEADER ============================== */
+      header.site-header {
+        position: sticky;
+        top: 0;
+        z-index: 50;
+        backdrop-filter: saturate(120%) blur(10px);
+        background: color-mix(in srgb, var(--color-bg) 88%, transparent);
+        border-bottom: 1px solid var(--color-border);
+      }
+      .header-bar {
+        display: flex;
+        align-items: center;
+        gap: var(--sp-4);
+        padding: var(--sp-4) 0;
+      }
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: var(--sp-3);
+        font-weight: 700;
+      }
+      .brand img {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        box-shadow: var(--shadow-sm);
+      }
+
+      nav.nav {
+        margin-left: auto;
+        display: flex;
+        align-items: center;
+        gap: var(--sp-2);
+      }
+      .nav a {
+        padding: 10px 12px;
+        border-radius: var(--radius-sm);
+        color: var(--color-muted);
+      }
+      .nav a[aria-current="page"],
+      .nav a:hover {
+        color: var(--color-text);
+        background: #0000000a;
+      }
+
+      .actions {
+        display: flex;
+        align-items: center;
+        gap: var(--sp-3);
+        margin-left: var(--sp-3);
+      }
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        cursor: pointer;
+        border: 1px solid var(--color-border);
+        background: var(--color-surface);
+        padding: 10px 14px;
+        border-radius: var(--radius-md);
+        box-shadow: var(--shadow-sm);
+        font-weight: 600;
+        transition: transform 0.15s ease, box-shadow 0.2s ease;
+      }
+      .btn:hover {
+        transform: translateY(-1px);
+        box-shadow: var(--shadow-md);
+      }
+      .btn-primary {
+        border: none;
+        color: #fff;
+        background: var(--brand-grad);
+      }
+      .btn-ghost {
+        background: transparent;
+        border-color: #00000022;
+      }
+      .btn-small {
+        padding: 8px 12px;
+        font-size: var(--fs-sm);
+      }
+
+      .menu-toggle {
+        display: none;
+        border: 1px solid var(--color-border);
+        background: var(--color-surface);
+        padding: 8px 10px;
+        border-radius: var(--radius-sm);
+      }
+      @media (max-width: 860px) {
+        .nav {
+          display: none;
+        }
+        .menu-toggle {
+          display: inline-flex;
+        }
+        .nav.open {
+          display: flex;
+          position: absolute;
+          left: 0;
+          right: 0;
+          top: 64px;
+          background: var(--color-bg);
+          padding: var(--sp-4) var(--sp-6);
+          border-bottom: 1px solid var(--color-border);
+        }
+      }
+
+      /* ============================== HERO ============================== */
+      .banner {
+        position: relative;
+        width: 100%;
+        height: 70vh;
+        background: url("assets/banner.jpg") center/cover no-repeat;
+        border-bottom: 1px solid var(--color-border);
+        box-shadow: var(--shadow-md);
+        overflow: hidden;
+        isolation: isolate;
+      }
+      .banner::after {
+        /* darken for readability */
+        content: "";
+        position: absolute;
+        inset: 0;
+        background:
+          linear-gradient(180deg, #00000066 0%, #00000033 30%, transparent 60%),
+          radial-gradient(800px 400px at 80% -10%, #00000055 0%, transparent 70%);
+        mix-blend-mode: multiply;
+      }
+      .hero-content {
+        position: relative;
+        z-index: 1;
+        color: #fff;
+        height: 100%;
+        display: grid;
+        place-items: center;
+        text-align: center;
+        padding: 0 var(--sp-6);
+      }
+      .kicker {
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        opacity: 0.9;
+        font-size: var(--fs-sm);
+      }
+      .hero-title {
+        font-size: var(--fs-3xl);
+        line-height: 1.1;
+        margin: var(--sp-4) 0 var(--sp-3);
+      }
+      .hero-sub {
+        font-size: var(--fs-md);
+        opacity: 0.9;
+        max-width: 60ch;
+        margin: 0 auto var(--sp-6);
+      }
+      .hero-cta {
+        display: flex;
+        gap: var(--sp-3);
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+
+      /* Floating accent orbs */
+      .orb {
+        position: absolute;
+        border-radius: 999px;
+        filter: blur(40px);
+        opacity: 0.5;
+      }
+      .orb.one {
+        width: 240px;
+        height: 240px;
+        left: -60px;
+        top: 20%;
+        background: #60a5fa66;
+        animation: float 16s ease-in-out infinite;
+      }
+      .orb.two {
+        width: 200px;
+        height: 200px;
+        right: -40px;
+        top: 10%;
+        background: #a78bfa66;
+        animation: float 18s ease-in-out infinite reverse;
+      }
+      @keyframes float {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(22px);
+        }
+      }
+
+      /* ============================== MAIN TYPOGRAPHY ============================== */
+      .page-wrap {
+        padding: var(--sp-10) 0 var(--sp-12);
+      }
+      .page-title {
+        margin: 0 0 var(--sp-2);
+        font-size: var(--fs-2xl);
+        background: var(--brand-grad);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        text-align: center;
+      }
+      .subtitle {
+        margin: 0 0 var(--sp-6);
+        font-size: var(--fs-md);
+        color: var(--color-muted);
+      }
+      h2 {
+        font-size: var(--fs-xl);
+        margin: var(--sp-8) 0 var(--sp-2);
+        text-align: center;
+      }
+      p {
+        font-size: var(--fs-md);
+        color: var(--color-muted);
+      }
+
+      /* ============================== UTILITIES ============================== */
+      .grid {
+        display: grid;
+        gap: var(--sp-6);
+      }
+      .grid-3 {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+      .grid-4 {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+      }
+      @media (max-width: 980px) {
+        .grid-3,
+        .grid-4 {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+      }
+      @media (max-width: 640px) {
+        .grid-3,
+        .grid-4 {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      .card {
+        background: var(--color-surface);
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius-lg);
+        padding: var(--sp-6);
+        box-shadow: var(--shadow-sm);
+        transition: transform 0.15s ease, box-shadow 0.2s ease;
+      }
+      .card:hover {
+        box-shadow: var(--shadow-md);
+        transform: translateY(-1px);
+      }
+      .card .eyebrow {
+        font-size: var(--fs-xs);
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--color-muted);
+      }
+      .card h3 {
+        margin: 6px 0 8px;
+        font-size: var(--fs-lg);
+      }
+
+      .stat {
+        display: grid;
+        gap: 6px;
+        text-align: center;
+      }
+      .stat strong {
+        font-size: 2rem;
+        color: transparent;
+        background: var(--brand-grad);
+        -webkit-background-clip: text;
+        background-clip: text;
+      }
+
+      .pill-row {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 16px;
+      }
+      .pill {
+        background: var(--color-surface);
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius-md);
+        padding: 12px 14px;
+        font-size: var(--fs-sm);
+        line-height: 1.5;
+        color: var(--color-text);
+        box-shadow: var(--shadow-sm);
+        transition: all 0.25s ease;
+      }
+      .pill:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-md);
+      }
+
+      .gradient-text {
+        background: var(--brand-grad);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+      }
+
+      blockquote {
+        margin: var(--sp-8) auto;
+        padding: var(--sp-6);
+        border-left: 4px solid var(--brand-1);
+        background: var(--color-surface);
+        border-radius: var(--radius-md);
+        text-align: center;
+        max-width: 800px;
+        font-style: italic;
+      }
+
+      /* ============================== QUICK STATS ============================== */
+      .stats {
+        margin-top: calc(var(--sp-12) * -0.6);
+        position: relative;
+        z-index: 2;
+      }
+      .stats .card {
+        display: grid;
+        place-items: center;
+        padding: var(--sp-8);
+      }
+
+      /* ============================== EXPERIENCE HIGHLIGHTS ============================== */
+      .timeline {
+        position: relative;
+        margin: var(--sp-8) 0;
+      }
+      .timeline::before {
+        content: "";
+        position: absolute;
+        left: 16px;
+        top: 0;
+        bottom: 0;
+        width: 2px;
+        background: linear-gradient(var(--brand-1), var(--brand-2));
+        opacity: 0.35;
+      }
+      .milestone {
+        position: relative;
+        margin-left: 48px;
+        margin-bottom: var(--sp-6);
+        background: var(--color-surface);
+        border: 1px solid var(--color-border);
+        box-shadow: var(--shadow-sm);
+        border-radius: var(--radius-md);
+        padding: var(--sp-4) var(--sp-6);
+      }
+      .milestone::before {
+        content: "";
+        position: absolute;
+        left: -34px;
+        top: 16px;
+        width: 14px;
+        height: 14px;
+        border-radius: 999px;
+        background: var(--brand-1);
+        box-shadow: 0 0 0 6px #2563eb22;
+      }
+
+      /* ============================== SKILLS ============================== */
+      .skill {
+        display: grid;
+        gap: 4px;
+        margin-bottom: 10px;
+      }
+      .skill span {
+        font-size: var(--fs-sm);
+        color: var(--color-text);
+      }
+      .bar {
+        height: 8px;
+        background: #00000010;
+        border-radius: 999px;
+        overflow: hidden;
+        border: 1px solid var(--color-border);
+      }
+      .bar > span {
+        display: block;
+        height: 100%;
+        background: var(--brand-grad);
+        border-radius: 999px;
+        width: var(--w, 70%);
+        transition: width 1s ease;
+      }
+
+      /* ============================== CTA STRIP ============================== */
+      .cta-strip {
+        background: linear-gradient(90deg, #111827, #0b1220);
+        color: #fff;
+        border-radius: var(--radius-xl);
+        padding: var(--sp-8);
+        box-shadow: var(--shadow-lg);
+        display: grid;
+        gap: var(--sp-4);
+        align-items: center;
+        grid-template-columns: 1fr auto;
+      }
+      .cta-strip h3 {
+        margin: 0;
+        font-size: clamp(1.4rem, 2.2vw, 1.8rem);
+      }
+      .cta-actions {
+        display: flex;
+        gap: var(--sp-3);
+        flex-wrap: wrap;
+      }
+
+      .tag {
+        display: inline-flex;
+        gap: 8px;
+        align-items: center;
+        background: linear-gradient(90deg, #0ea5e9, #8b5cf6);
+        color: #000;
+        font-weight: 700;
+        border-radius: 999px;
+        padding: 6px 10px;
+      }
+
+      /* ============================== REVEAL ANIMS ============================== */
+      .reveal {
+        opacity: 0;
+        transform: translateY(12px);
+        transition: opacity 0.6s ease, transform 0.6s ease;
+      }
+      .reveal.in {
+        opacity: 1;
+        transform: none;
+      }
+
+      /* ============================== MEDIA ============================== */
+      .float-image {
+        float: left;
+        width: 320px;
+        max-width: 40%;
+        margin: 0 var(--sp-6) var(--sp-6) 0;
+        border-radius: var(--radius-lg);
+        box-shadow: var(--shadow-md);
+        shape-outside: inset(0 round var(--radius-lg));
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .btn:hover,
+        .card:hover,
+        .pill:hover {
+          transform: none;
+        }
+        .reveal {
+          opacity: 1;
+          transform: none;
+        }
+        .orb {
+          display: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- ============================== HEADER ============================== -->
+    <header class="site-header" role="banner" aria-label="Site header">
+      <div class="container header-bar">
+        <a class="brand" href="index.html">
+          <img loading="lazy" src="assets/profile.jpeg" alt="Portrait of Abhishek Sarepaka" />
+          <span>Abhishek Sarepaka</span>
+        </a>
+
+        <button class="menu-toggle" id="menuToggle" aria-controls="siteNav" aria-expanded="false" aria-label="Toggle navigation menu">☰</button>
+
+        <nav class="nav" id="siteNav" role="navigation" aria-label="Primary">
+          <a href="index.html">Home</a>
+          <a href="about.html" aria-current="page">About</a>
+          <a href="projects.html">Projects</a>
+          <a href="hobbies.html">Hobbies</a>
+          <a href="contact.html">Contact</a>
+        </nav>
+
+        <div class="actions">
+          <a class="btn btn-primary" href="projects/Abhishek Sarepaka Resume .pdf" download aria-label="Download résumé as PDF">Download Resume</a>
+        </div>
+      </div>
+    </header>
+
+    <!-- ============================== HERO ============================== -->
+    <section class="banner" role="img" aria-label="Personal banner image for Abhishek">
+      <div class="orb one" aria-hidden="true"></div>
+      <div class="orb two" aria-hidden="true"></div>
+      <div class="hero-content container">
+        <div>
+          <span class="tag">About Me</span>
+          <h1 class="hero-title">
+            Turning curious <em class="gradient-text" style="font-style:inherit">questions</em> into measurable
+            <em class="gradient-text" style="font-style:inherit">impact</em>.
+          </h1>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================== QUICK STATS ============================== -->
+    <section class="container section stats" aria-label="Quick stats">
+      <div class="grid grid-4">
+        <div class="card stat reveal"><strong>20+ </strong><span>Projects delivered</span></div>
+        <div class="card stat reveal"><strong>5 </strong><span>Consulting engagements</span></div>
+        <div class="card stat reveal"><strong>6 </strong><span>Competition wins</span></div>
+        <div class="card stat reveal"><strong>∞ </strong><span>Questions asked</span></div>
+      </div>
+    </section>
+
+    <!-- ============================== MAIN ============================== -->
+    <main id="main" class="container page-wrap">
+      <h2 class="reveal">My Story</h2>
+
+      <div class="grid">
+        <div class="reveal">
+          <p>
+            My name is <span class="gradient-text" style="font-weight:700">Abhishek Sarepaka</span>, and I am a
+            <strong>senior at Cal Poly Pomona</strong> majoring in <strong>Computer Science</strong> with a
+            <strong>minor in Data Science</strong>.
+          </p>
+          <p>
+            Growing up, I was the kid who could spend hours solving puzzles and asking questions about how things worked.
+            That constant search for the “why” behind everything sparked my curiosity for patterns and eventually for data.
+          </p>
+          <p>
+            As I learned more, I realized that data is not just numbers on a screen; it is a language that reveals how the
+            world operates. That realization inspired me to pursue a career where I could use data to uncover insights and
+            create meaningful solutions.
+          </p>
+          <p>
+            At Cal Poly Pomona, I have brought that passion to life through consulting projects with real companies,
+            competitions that test analytical thinking, and research aimed at advancing data-driven innovation. Each
+            experience has strengthened my belief that data, when used thoughtfully, has the power to turn curiosity into
+            measurable impact.
+          </p>
+          <p>
+            I am now focused on continuing that journey by building systems and models that help organizations make
+            smarter and more confident decisions.
+          </p>
+        </div>
+      </div>
+
+      <h2 class="reveal">Guiding Principles</h2>
+      <div class="pill-row reveal">
+        <span class="pill"><strong>Stay endlessly curious.</strong> Every question is a doorway to understanding — I never stop exploring what data can reveal.</span>
+        <span class="pill"><strong>Keep growing forward.</strong> I see challenges as invitations to learn, adapt, and discover what I’m capable of next.</span>
+        <span class="pill"><strong>Build together.</strong> Collaboration means listening deeply, valuing every voice, and finding solutions that lift the whole team.</span>
+        <span class="pill"><strong>Lead through learning.</strong> I try to inspire growth by sharing what I know and learning just as much from those around me.</span>
+      </div>
+
+      <!-- ============================== EXPERIENCE HIGHLIGHTS ============================== -->
+      <h2 class="reveal">Experience Highlights</h2>
+      <div class="timeline" aria-label="Experience timeline">
+        <div class="milestone reveal">
+          <div class="eyebrow">2022 · Cal Poly Pomona</div>
+          <h3>First Step into Data</h3>
+          <p>
+            Started my journey at Cal Poly Pomona and entered my first data analytics competition — placing
+            <strong>3rd</strong> and discovering a passion for turning messy data into meaningful insight.
+          </p>
+        </div>
+
+        <div class="milestone reveal">
+          <div class="eyebrow">2023 · MISSA &amp; Consulting</div>
+          <h3>Learning Through Collaboration</h3>
+          <p>
+            Joined the <strong>MISSA Data Analytics Team</strong> and worked on my first consulting project with
+            <strong>Southern California Edison</strong>, applying data to solve real-world energy challenges and seeing
+            teamwork bring impact to life.
+          </p>
+        </div>
+
+        <div class="milestone reveal">
+          <div class="eyebrow">2024 · Research &amp; Boeing</div>
+          <h3>Turning Curiosity into Impact</h3>
+          <p>
+            Expanded into <strong>AI research</strong> and continued growing through new consulting challenges — including a
+            data-driven market analysis project for <strong>Boeing</strong> that strengthened my love for applied analytics.
+          </p>
+        </div>
+
+        <div class="milestone reveal">
+          <div class="eyebrow">2025 · Navi Technologies &amp; Avanade</div>
+          <h3>From Student to Practitioner</h3>
+          <p>
+            Stepped into industry through <strong>internships at Navi and Avanade</strong>, building scalable data systems
+            and ML pipelines that bridged technical rigor with real business value — my first step into professional data
+            engineering.
+          </p>
+        </div>
+      </div>
+
+      <!-- ============================== SKILLS ============================== -->
+      <h2 class="reveal">Skills Snapshot</h2>
+      <div class="grid grid-3" aria-label="Skills">
+        <div class="card reveal">
+          <div class="eyebrow">Modeling</div>
+          <h3>Machine Learning</h3>
+          <div class="skill"><span>Classification &amp; Forecasting</span><div class="bar"><span style="--w:85%"></span></div></div>
+          <div class="skill"><span>Feature Engineering</span><div class="bar"><span style="--w:90%"></span></div></div>
+          <div class="skill"><span>Model Evaluation</span><div class="bar"><span style="--w:80%"></span></div></div>
+        </div>
+
+        <div class="card reveal">
+          <div class="eyebrow">Data</div>
+          <h3>Engineering</h3>
+          <div class="skill"><span>ETL &amp; Pipelines</span><div class="bar"><span style="--w:88%"></span></div></div>
+          <div class="skill"><span>SQL &amp; Warehousing</span><div class="bar"><span style="--w:90%"></span></div></div>
+          <div class="skill"><span>Airflow &amp; Automation</span><div class="bar"><span style="--w:75%"></span></div></div>
+        </div>
+
+        <div class="card reveal">
+          <div class="eyebrow">Communication</div>
+          <h3>Storytelling</h3>
+          <div class="skill"><span>Stakeholder Alignment</span><div class="bar"><span style="--w:85%"></span></div></div>
+          <div class="skill"><span>Dashboards &amp; Visualization</span><div class="bar"><span style="--w:88%"></span></div></div>
+          <div class="skill"><span>Mentorship</span><div class="bar"><span style="--w:80%"></span></div></div>
+        </div>
+      </div>
+
+      <blockquote class="reveal">“Data doesn’t change the world — people who know what to do with it do.”</blockquote>
+
+      <h2 class="reveal">Beyond the Data</h2>
+      <div class="reveal" style="max-width: 900px; margin: 0 auto;">
+        <img src="assets/da-team.jpeg" alt="Abhishek Sarepaka working with data visualization" class="float-image" />
+        <p>
+          I mentor emerging analysts, explore responsible AI, and design data interfaces that make complex ideas feel
+          simple. My north star has always been to build tools people trust when the stakes are high, because technology
+          means little without the confidence and clarity it gives to the people using it.
+        </p>
+        <p>
+          In my current role as the Director of Data Analytics at MISSA, I strive to uphold the organization’s core value
+          of service by creating opportunities for others to grow. I lead with the belief that true impact extends beyond
+          personal achievement and is measured by how well we help others reach their potential. Whether it is guiding a
+          student through their first project or designing a framework to strengthen collaboration, I aim to make data feel
+          both accessible and empowering.
+        </p>
+        <p>
+          Leadership, to me, is about consistency and compassion. It means taking the time to listen, understanding the
+          perspectives of others, and ensuring that every voice feels valued. I believe that strong teams are built on
+          trust, shared goals, and the willingness to learn together, not just on technical excellence.
+        </p>
+        <p>
+          Mentorship has become one of the most meaningful parts of my professional journey. I see it as a continuous
+          exchange of knowledge and perspective, sharing what I have learned while remaining open to new insights from
+          those I mentor. Each conversation is a reminder that growth is mutual and that every interaction shapes both the
+          teacher and the learner.
+        </p>
+        <p>
+          I carry forward the lessons of those who have guided me, honoring their influence by investing time and care
+          into the next generation of data professionals.
+        </p>
+      </div>
+
+      <!-- ============================== CTA STRIP ============================== -->
+      <div id="contact-cta" class="section reveal">
+        <div class="cta-strip">
+          <h3>Excited to apply my skills to help organizations grow through thoughtful, data-driven impact.</h3>
+          <div class="cta-actions">
+            <a class="btn btn-primary" href="contact.html">Get in touch</a>
+            <a class="btn btn-ghost" href="assets/Abhishek_Sarepaka_Resume.pdf" download>Download Resume</a>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- ============================== FOOTER ============================== -->
+    <footer class="container section" style="padding-top: 0;">
+      <p style="text-align: center; color: var(--color-muted); margin-top: var(--sp-8);">
+        © <span id="y"></span> Abhishek Sarepaka
+      </p>
+    </footer>
+
+    <!-- ============================== SCRIPTS ============================== -->
+    <script>
+      // Mobile menu toggle
+      const menuToggle = document.getElementById('menuToggle');
+      const siteNav = document.getElementById('siteNav');
+      if (menuToggle && siteNav) {
+        menuToggle.addEventListener('click', () => {
+          const isOpen = siteNav.classList.toggle('open');
+          menuToggle.setAttribute('aria-expanded', String(isOpen));
+        });
+      }
+
+      // Year
+      document.getElementById('y').textContent = new Date().getFullYear();
+
+      // Scroll reveals
+      const io = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((e) => {
+            if (e.isIntersecting) {
+              e.target.classList.add('in');
+              // kick progress bars once visible
+              e.target.querySelectorAll?.('.bar > span').forEach((el) => {
+                el.style.width = getComputedStyle(el).getPropertyValue('--w');
+              });
+              io.unobserve(e.target);
+            }
+          });
+        },
+        { threshold: 0.16 }
+      );
+
+      document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
+    </script>
+  </body>
 </html>

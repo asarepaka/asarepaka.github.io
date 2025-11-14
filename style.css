@@ -5,6 +5,7 @@ body {
   background: #fafafa;
 }
 
+/* Navbar */
 nav.navbar {
   background: #007acc;
   padding: 1rem;
@@ -18,95 +19,152 @@ nav.navbar a {
   font-weight: bold;
 }
 
-nav.navbar a:hover, nav.navbar a.active {
+nav.navbar a:hover,
+nav.navbar a.active {
   text-decoration: underline;
 }
 
+/* Header */
+.nav {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+  background-color: #f8f8f8;
+  padding: 0;
+}
+
+.nav-inner {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 10px 20px;
+}
+
+.brand {
+  margin-right: 20px;
+  font-weight: bold;
+  text-decoration: none;
+  color: #333;
+}
+
+.menu {
+  display: flex;
+  align-items: center;
+  margin-right: auto;
+}
+
+.menu a {
+  margin-right: 15px;
+  text-decoration: none;
+  color: #333;
+}
+
+.menu a:hover {
+  text-decoration: underline;
+}
+
+.hero__img {
+  width: 60%;
+  max-width: 280px;
+  height: auto;
+  object-fit: cover;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-md);
+  display: block;
+  margin: 0 auto;
+}
+
+
+
+/* Hero */
 .hero {
-  text-align: center;
-  padding: 6rem 1rem;
-  color: white;
-  background-image: url("assets/banner.jpg");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  position: relative;
+  display: grid;
+  grid-template-columns: clamp(140px, 18vw, 200px) 1fr; /* fixed duplicate line */
+  align-items: center;
+  gap: 24px;
+  padding: 56px 0;
 }
 
-/* Optional: add a soft overlay to make text readable */
-.hero::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.4); /* Darkens background slightly */
+.avatar {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
 }
-
-.hero * {
-  position: relative;
-  z-index: 1; /* Keeps text above the overlay */
-}
-
 
 .hero .profile-pic {
-  width: 220px;
-  height: 220px;
-  border-radius: 50%;
-  border: 3px solid white;
-  margin-bottom: 1rem;
+  width: 80%;
+  max-width: 280px; /* smaller max width */
+  height: auto;
+  object-fit: cover;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-md);
+  margin: 0 auto; /* centers it on small screens */
 }
 
+/* Sections */
 .section {
   padding: 3rem 1rem;
   text-align: center;
   max-width: 900px;
   margin: auto;
 }
-/* Styling for the main container (the "box") */
+
+/* QUOTE SECTION – modern blue-only gradient (no pink tint) */
 .section.quote {
-    /* Box appearance */
-    border: 2px solid #007bff; /* A nice blue border */
-    border-radius: 12px; /* Softly rounded corners */
-    padding: 30px; /* Space inside the box */
-    margin: 40px auto; /* Space outside the box, and centering it */
-    max-width: 700px; /* Limits the width for better readability */
-    text-align: center; /* Centers the content */
-    background-color: #f8f9fa; /* Very light grey background */
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  background: linear-gradient(135deg, #0ea5e9 0%, #3b82f6 100%);
+  color: white;
+  padding: 2rem 1rem;
+  border-radius: 10px;
+  font-style: italic;
+  font-size: 1.25rem;
+  box-shadow: 0 4px 12px rgba(14, 165, 233, 0.3);
 }
 
-/* Styling for the quote text */
-.section.quote blockquote {
-    font-style: italic;
-    font-size: 1.3em;
-    margin-bottom: 20px;
-    color: #343a40; /* Darker text color */
-    border: none; /* Override default blockquote styling if any */
+/* Gradient Button (shared style) */
+.btn-gradient {
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #000;
+  text-decoration: none;
+  border: none;
+  border-radius: 25px;
+  background: linear-gradient(90deg, #a0e9ff 0%, #a162f7 100%);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-/* Styling for the author's name */
-.section.quote span {
-    display: block; /* Puts the author on a new line */
-    font-size: 0.9em;
-    font-weight: 600;
-    margin-top: 10px;
-    color: #007bff; /* Matches the border color */
+.btn-gradient:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(161, 98, 247, 0.4);
 }
 
-/* Styling for the Call-to-Action button */
-.section.quote .btn {
-    display: inline-block;
-    background-color: #007bff; /* Primary button color */
-    color: white;
-    padding: 10px 25px;
-    text-decoration: none; /* Removes underline */
-    border-radius: 6px;
-    font-weight: bold;
-    transition: background-color 0.3s ease; /* Smooth hover effect */
+/* Download Resume Button — top-right */
+.btn-download {
+  display: inline-block;
+  background: linear-gradient(90deg, #a0e9ff 0%, #a162f7 100%);
+  color: #000;
+  padding: 0.8rem 1.6rem;
+  border: none;
+  border-radius: 25px;
+  font-size: 1rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.section.quote .btn:hover {
-    background-color: #0056b3; /* Darker color on hover */
+.btn-download:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(161, 98, 247, 0.4);
 }
+
+/* General Yellow Button */
 .btn {
   background: #ffde59;
   color: #222;
@@ -121,6 +179,7 @@ nav.navbar a:hover, nav.navbar a.active {
   background: #fff3a8;
 }
 
+/* Project Cards */
 .project-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -128,14 +187,13 @@ nav.navbar a:hover, nav.navbar a.active {
   margin-top: 2rem;
 }
 
-/* Card layout */
 .card {
   background: white;
   border-radius: 10px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   overflow: hidden;
   display: flex;
-  flex-direction: column; /* ensures content flows top-to-bottom */
+  flex-direction: column;
   height: 100%;
 }
 
@@ -151,7 +209,7 @@ nav.navbar a:hover, nav.navbar a.active {
 
 .card p {
   padding: 0 1rem;
-  flex-grow: 1; /* pushes button to bottom */
+  flex-grow: 1;
 }
 
 .card .btn.small {
@@ -161,6 +219,7 @@ nav.navbar a:hover, nav.navbar a.active {
   text-decoration: none;
 }
 
+/* Hobbies List */
 .hobby-list {
   list-style: none;
   padding: 0;
@@ -168,42 +227,72 @@ nav.navbar a:hover, nav.navbar a.active {
   line-height: 1.8;
 }
 
-/* Styles for the container to center itself on the page */
+/* Centered CTA Section */
 .section.centered-cta {
-    /* Step 1: Center the *content* (the button) inside this container */
-    text-align: center; 
-    
-    /* Step 2: Define a maximum width for the container */
-    max-width: 500px; /* Adjust this value as needed, but it must be less than 100% */
-    
-    /* Step 3: Center the *container* on the page */
-    margin: 40px auto; /* 'auto' for left/right margins centers the block-level element */
-    
-    padding: 20px 0;
+  text-align: center;
+  max-width: 500px;
+  margin: 40px auto;
+  padding: 20px 0;
 }
 
-/* Button styles remain the same for appearance */
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 18px 36px;
+  border-radius: 999px;
+  background: linear-gradient(to right, #0ea5e9 0%, #8b5cf6 100%);
+  color: #fff;
+  font-size: clamp(32px, 4vw, 48px);
+  font-weight: 800;
+  letter-spacing: 0.05em;
+}
+
 .centered-cta .btn {
-    display: inline-block;
-    background-color: #007bff; 
-    color: white;
-    padding: 12px 30px;
-    text-decoration: none;
-    border-radius: 6px;
-    font-size: 1.1em;
-    font-weight: bold;
-    transition: background-color 0.3s ease;
+  display: inline-block;
+  background-color: #007bff;
+  color: white;
+  padding: 12px 30px;
+  text-decoration: none;
+  border-radius: 6px;
+  font-size: 1.1em;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
 }
 
 .centered-cta .btn:hover {
-    background-color: #0056b3;
+  background-color: #0056b3;
 }
 
+.hero__cta {
+  display: flex;
+  flex-direction: column; /* stack vertically */
+  align-items: flex-start; /* align left; use center if you prefer */
+  gap: var(--sp-3);
+  margin-top: var(--sp-4);
+}
+
+
+/* Footer */
 footer {
   margin-top: auto;
   background: #007acc;
   color: white;
   text-align: center;
   padding: 1rem;
-
 }
+
+/* Mobile adjustments */
+@media (max-width: 640px) {
+  .nav-inner {
+    gap: 10px;
+  }
+  .menu a {
+    margin-right: 10px;
+  }
+  .btn-download {
+    padding: 0.6rem 1.1rem;
+    font-size: 0.95rem;
+  }
+}
+/* End of style.css */

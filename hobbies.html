@@ -1,34 +1,510 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Hobbies | Your Name</title>
-  <link rel="stylesheet" href="style.css" />
-</head>
-<body>
-  <nav class="navbar">
-    <a href="index.html">Home</a>
-    <a href="about.html">About</a>
-    <a href="projects.html">Projects</a>
-    <a href="hobbies.html" class="active">Hobbies</a>
-    <a href="contact.html">Contact</a>
-  </nav>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Hobbies · Abhishek Sarepaka</title>
+    <meta name="description" content="Photography and creative hobbies of Abhishek Sarepaka." />
+    <link rel="icon" href="assets/favicon.ico" />
 
-  <section class="section hobbies">
-    <h1>My Hobbies</h1>
-    <p>
-      When I’m not coding or analyzing data, you’ll find me doing things that keep me creative and inspired:
-    </p>
-    <ul class="hobby-list">
-      <li>📷 Photography – capturing nature and city life</li>
-      <li>🎮 Gaming – strategy and simulation games</li>
-      <li>🏔️ Hiking – exploring trails and landscapes</li>
-      <li>🎵 Music – playing guitar and producing beats</li>
-      <li>💡 Reading – sci-fi and tech innovation books</li>
-    </ul>
-  </section>
+    <!-- Preload LCP banner image -->
+    <link rel="preload" as="image" href="assets/photography.jpg" imagesizes="100vw" />
 
-  <footer>© 2025 Your Name</footer>
-</body>
+    <style>
+      /* ============================== DESIGN TOKENS (match About) ============================== */
+      :root {
+        --color-bg: #ffffff;
+        --color-surface: #f7f8fa;
+        --color-text: #0f172a;
+        --color-muted: #4b5563;
+        --color-border: #e5e7eb;
+        --tile-ratio: 4 / 3;
+        --feat-big-ratio: 16 / 9;
+        --feat-small-ratio: 4 / 3;
+
+        --brand-1: #2563eb;
+        --brand-2: #7c3aed;
+        --brand-3: #14b8a6;
+        --brand-grad: linear-gradient(90deg, var(--brand-1), var(--brand-2));
+        --brand-grad-2: radial-gradient(1200px 600px at 10% -10%, #93c5fd33 0%, transparent 60%),
+          radial-gradient(1200px 600px at 110% 10%, #c4b5fd33 0%, transparent 60%);
+
+        --ring: 0 0 0 3px rgba(37, 99, 235, 0.25);
+
+        --font-sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+        --fs-xs: 0.8125rem;
+        --fs-sm: 0.9375rem;
+        --fs-base: 1rem;
+        --fs-md: 1.125rem;
+        --fs-lg: 1.25rem;
+        --fs-xl: 2rem;
+        --fs-2xl: clamp(2.2rem, 4vw, 2.8rem);
+        --fs-3xl: clamp(2.6rem, 6vw, 3.4rem);
+
+        --sp-2: 8px; --sp-3: 12px; --sp-4: 16px; --sp-6: 24px; --sp-8: 32px; --sp-10: 40px; --sp-12: 48px; --sp-16: 64px;
+
+        --radius-sm: 8px; --radius-md: 14px; --radius-lg: 18px; --radius-xl: 26px;
+        --shadow-sm: 0 3px 10px rgba(0,0,0,.08);
+        --shadow-md: 0 8px 24px rgba(0,0,0,.1);
+        --shadow-lg: 0 30px 70px rgba(0,0,0,.18);
+      }
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --color-bg: #0b0c10; --color-surface: #111318; --color-text: #e6e8eb; --color-muted: #a3a7ad; --color-border: #1f2430;
+          --ring: 0 0 0 3px rgba(124,58,237,.28);
+          --shadow-sm: 0 10px 24px rgba(0,0,0,.35);
+          --shadow-md: 0 16px 40px rgba(0,0,0,.45);
+          --shadow-lg: 0 40px 90px rgba(0,0,0,.6);
+        }
+      }
+
+      /* ============================== GLOBAL ============================== */
+      * { box-sizing: border-box; }
+      html, body { height: 100%; }
+      body {
+        margin: 0; font-family: var(--font-sans); font-size: var(--fs-base); line-height: 1.6; color: var(--color-text);
+        background: var(--color-bg); background-image: var(--brand-grad-2); background-attachment: fixed;
+      }
+      img { max-width: 100%; display: block; }
+      a { color: inherit; text-decoration: none; }
+      a:focus-visible, button:focus-visible { outline: none; box-shadow: var(--ring); border-radius: 8px; }
+      .container { max-width: 1120px; padding: 0 var(--sp-6); margin: 0 auto; }
+      .section { padding: var(--sp-12) 0; }
+
+      /* ============================== HEADER (match About) ============================== */
+      header.site-header {
+        position: sticky;
+        top: 0;
+        z-index: 50;
+        backdrop-filter: saturate(120%) blur(10px);
+        background: color-mix(in srgb, var(--color-bg) 88%, transparent);
+        border-bottom: 1px solid var(--color-border);
+      }
+      .header-bar { display:flex; align-items:center; gap:var(--sp-4); padding:var(--sp-4) 0; }
+      .brand { display:flex; align-items:center; gap:var(--sp-3); font-weight:700; }
+      .brand img { width:36px; height:36px; border-radius:50%; box-shadow:var(--shadow-sm); }
+
+      nav.nav { margin-left:auto; display:flex; align-items:center; gap:var(--sp-2); }
+      .nav a { padding:10px 12px; border-radius:var(--radius-sm); color:var(--color-muted); }
+      .nav a[aria-current="page"], .nav a:hover { color:var(--color-text); background:#0000000a; }
+
+      .actions {
+        display: flex;
+        align-items: center;
+        gap: var(--sp-3);
+        margin-left: var(--sp-3);
+      }
+      .btn{display:inline-flex;align-items:center;gap:10px;cursor:pointer;border:1px solid var(--color-border);background:var(--color-surface);padding:10px 14px;border-radius:var(--radius-md);box-shadow:var(--shadow-sm);font-weight:600;transition:transform .15s ease, box-shadow .2s ease;}
+      .btn:hover{transform:translateY(-1px);box-shadow:var(--shadow-md)}
+      .btn-primary{border:none;color:#fff;background:var(--brand-grad)}
+      .btn-small{padding:8px 12px;font-size:var(--fs-sm)}
+      .menu-toggle{display:none;border:1px solid var(--color-border);background:var(--color-surface);padding:8px 10px;border-radius:var(--radius-sm)}
+      @media (max-width:860px){
+        .nav{display:none}
+        .menu-toggle{display:inline-flex}
+        .nav.open{display:flex;position:absolute;left:0;right:0;top:64px;background:var(--color-bg);padding:var(--sp-4) var(--sp-6);border-bottom:1px solid var(--color-border)}
+      }
+
+      /* ============================== BANNER (match About height) ============================== */
+      .banner {
+        position: relative;
+        width: 100%;
+        height: 70vh; /* match About */
+        border-bottom: 1px solid var(--color-border);
+        box-shadow: var(--shadow-md);
+        overflow: hidden;
+        isolation: isolate;
+      }
+      .banner-img {
+        position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+        filter: saturate(1.05) contrast(1.02);
+      }
+      .banner::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background:
+          linear-gradient(180deg, #00000066 0%, #00000033 30%, transparent 60%),
+          radial-gradient(800px 400px at 80% -10%, #00000055 0%, transparent 70%);
+        mix-blend-mode: multiply;
+      }
+      .hero-content { position: relative; z-index: 1; color: #fff; height: 100%; display: grid; place-items: center; text-align: center; padding: 0 var(--sp-6); }
+      .hero-title { font-size: var(--fs-3xl); line-height: 1.1; margin: var(--sp-4) 0 var(--sp-3); }
+      .hero-sub { font-size: var(--fs-md); opacity: 0.9; max-width: 70ch; margin: 0 auto; }
+
+      .tag {
+        display: inline-flex; gap: 8px; align-items: center; background: linear-gradient(90deg, #0ea5e9, #8b5cf6);
+        color: #fff; font-weight: 700; border-radius: 999px; padding: 6px 10px;
+      }
+
+      .orb { position: absolute; border-radius: 999px; filter: blur(40px); opacity: .5; }
+      .orb.one { width: 240px; height: 240px; left: -60px; top: 20%; background: #60a5fa66; animation: float 16s ease-in-out infinite; }
+      .orb.two { width: 200px; height: 200px; right: -40px; top: 10%; background: #a78bfa66; animation: float 18s ease-in-out infinite reverse; }
+      @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(22px)} }
+
+      /* ============================== TYPOGRAPHY / UTIL ============================== */
+      .page-wrap { padding: var(--sp-10) 0 var(--sp-12); }
+      .title { font-size: var(--fs-xl); margin: var(--sp-8) 0 var(--sp-2); text-align: center; }
+      /* Orientation-aware aspect ratios for gallery tiles */
+      .tile.landscape { --tile-ratio: 16 / 9; }
+      .tile.portrait  { --tile-ratio: 3 / 4; } /* or 4 / 5 if you prefer a taller look */
+      .kicker { color: var(--color-muted); font-size: var(--fs-sm); text-align: center; margin-bottom: 6px; }
+      p { font-size: var(--fs-md); color: var(--color-muted); }
+
+      .grid { display: grid; gap: var(--sp-6); }
+      .featured { display: grid; grid-template-columns: 2fr 1fr; gap: var(--sp-4); }
+      .feat-card {
+        position: relative; border-radius: var(--radius-lg); overflow: hidden;
+        background: var(--color-surface); border: 1px solid var(--color-border); box-shadow: var(--shadow-sm);
+      }
+      .feat-card img { width: 100%; height: 100%; object-fit: cover; display: block; }
+      .feat-cap { position: absolute; left: 10px; bottom: 10px; background: rgba(0,0,0,.45); backdrop-filter: blur(6px); color: #fff; padding: 8px 12px; border-radius: 10px; font-size: 13px; }
+      @media (max-width: 900px) { .featured { grid-template-columns: 1fr; } }
+
+      /* ============================== HORIZONTAL GALLERY CAROUSEL ============================== */
+      .carousel-wrap { position: relative; margin-top: var(--sp-4); }
+      .gallery {
+        display: flex; gap: var(--sp-4); padding: var(--sp-2) 0 var(--sp-2);
+        overflow-x: auto; overflow-y: hidden; scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch; scrollbar-width: thin;
+      }
+      .gallery:focus { outline: none; box-shadow: var(--ring); }
+      .tile {
+        flex: 0 0 auto; width: clamp(240px, 36vw, 420px);
+        scroll-snap-align: start;
+        border-radius: var(--radius-md); overflow: hidden;
+        background: var(--color-surface); border: 1px solid var(--color-border); box-shadow: var(--shadow-sm);
+        aspect-ratio: var(--tile-ratio);
+      }
+      .tile img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;      /* fill the frame without distortion */
+        object-position: center;
+      }
+
+      .gallery-nav {
+        pointer-events: none; position: absolute; inset: 0;
+        display: flex; align-items: center; justify-content: space-between; padding-inline: var(--sp-2);
+      }
+      .gbtn {
+        pointer-events: auto; display: inline-flex; align-items: center; justify-content: center;
+        width: 42px; height: 42px; border-radius: 999px;
+        border: 1px solid #ffffff30; background: #ffffff18; backdrop-filter: blur(6px);
+        color: #fff; cursor: pointer; box-shadow: var(--shadow-md);
+        transition: transform .15s ease, box-shadow .2s ease, opacity .2s ease;
+      }
+      .gbtn:hover { transform: translateY(-1px); box-shadow: var(--shadow-lg); }
+      .gbtn[disabled] { opacity: .35; cursor: default; }
+      @media (prefers-color-scheme: light) {
+        .gbtn { background: #00000018; color: #000; border-color: #00000022; }
+      }
+
+      /* ============================== LIGHTBOX ============================== */
+      .lightbox { position: fixed; inset: 0; display: none; place-items: center; background: rgba(0,0,0,.85); z-index: 60; }
+      .lightbox.open { display: grid; }
+      .lb-img { max-width: 92vw; max-height: 86vh; border-radius: 12px; box-shadow: 0 30px 80px rgba(0,0,0,.6); }
+      .lb-ui { position: fixed; inset: 0; display: flex; justify-content: space-between; align-items: center; padding: var(--sp-6); color: #fff; }
+      .lb-btn {
+        background: #ffffff16; border: 1px solid #ffffff30; border-radius: 12px; padding: 10px 12px; cursor: pointer;
+        transition: transform .15s ease, box-shadow .2s ease;
+      }
+      .lb-btn:hover { transform: translateY(-1px); box-shadow: var(--shadow-md); }
+
+      /* NEW: floating X close button */
+      .lb-close {
+        position: absolute;
+        top: 24px; right: 24px;
+        width: 42px; height: 42px;
+        display: inline-flex; align-items: center; justify-content: center;
+        border-radius: 999px;
+        background: rgba(0,0,0,0.5);
+        border: 1px solid rgba(255,255,255,0.3);
+        color: #fff;
+        font-size: 24px; line-height: 1;
+        cursor: pointer;
+        backdrop-filter: blur(6px);
+        transition: transform .15s ease, box-shadow .2s ease, opacity .2s ease;
+        z-index: 61; /* above image */
+      }
+      .lb-close:hover { transform: translateY(-1px); box-shadow: var(--shadow-lg); }
+      @media (prefers-color-scheme: light) {
+        .lb-close { background: rgba(255,255,255,0.65); color: #000; border-color: rgba(0,0,0,0.2); }
+      }
+
+      /* ============================== REVEAL ============================== */
+      .reveal { opacity: 0; transform: translateY(12px); transition: opacity .6s ease, transform .6s ease; }
+      .reveal.in { opacity: 1; transform: none; }
+
+      @media (prefers-reduced-motion: reduce) {
+        .btn:hover, .lb-btn:hover, .gbtn:hover { transform: none; }
+        .reveal { opacity: 1; transform: none; }
+        .orb { display: none; }
+      }
+    </style>
+  </head>
+  <body>
+
+    <!-- HEADER -->
+    <header class="site-header" role="banner" aria-label="Site header">
+      <div class="container header-bar">
+        <a class="brand" href="index.html">
+          <img src="assets/profile.jpeg" alt="Portrait of Abhishek Sarepaka" />
+          <span>Abhishek Sarepaka</span>
+        </a>
+
+        <button class="menu-toggle" id="menuToggle" aria-controls="siteNav" aria-expanded="false" aria-label="Toggle navigation menu">☰</button>
+
+        <nav class="nav" id="siteNav" role="navigation" aria-label="Primary">
+          <a href="index.html">Home</a>
+          <a href="about.html">About</a>
+          <a href="projects.html">Projects</a>
+          <a href="hobbies.html" aria-current="page">Hobbies</a>
+          <a href="contact.html">Contact</a>
+        </nav>
+
+        <div class="actions">
+          <a class="btn btn-primary" href="projects/Abhishek Sarepaka Resume .pdf" download aria-label="Download résumé as PDF">Download Resume</a>
+        </div>
+      </div>
+    </header>
+
+    <!-- ============================== HERO ============================== -->
+    <section class="banner" role="img" aria-label="Photography banner">
+      <img class="banner-img" src="assets/photography.jpg" alt="" />
+      <div class="orb one" aria-hidden="true"></div>
+      <div class="orb two" aria-hidden="true"></div>
+      <div class="hero-content container">
+        <div class="reveal in">
+          <span class="tag">Hobbies</span>
+          <h1 class="hero-title">Framing stories. Chasing light.</h1>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================== MAIN ============================== -->
+    <main id="main" class="container page-wrap">
+      <!-- FEATURED ROW -->
+      <section class="section reveal" aria-labelledby="featured">
+        <h2 id="featured" class="title">Featured Shots</h2>
+
+        <div class="featured">
+          <figure class="feat-card" aria-label="Featured photo 1">
+            <img src="assets/photo-3.jpg" alt="Sunset in Chinatown" />
+            <figcaption class="feat-cap">Sunset in Chinatown</figcaption>
+          </figure>
+
+          <div class="grid" style="gap: var(--sp-4)">
+            <figure class="feat-card">
+              <img src="assets/photo-2.jpg" alt="Mountain View at Yosemite" />
+              <figcaption class="feat-cap">Mountain View at Yosemite</figcaption>
+            </figure>
+            <figure class="feat-card">
+              <img src="assets/photo-1.jpg" alt="Trail at Lake Tahoe" />
+              <figcaption class="feat-cap">Trail at Lake Tahoe</figcaption>
+            </figure>
+          </div>
+        </div>
+      </section>
+
+      <!-- HORIZONTAL GALLERY -->
+      <section class="section reveal" aria-labelledby="gallery-title">
+        <h2 id="gallery-title" class="title">Gallery</h2>
+
+        <div class="carousel-wrap" role="region" aria-label="Photo gallery carousel">
+          <div id="gallery" class="gallery" tabindex="0" aria-live="polite">
+            <!-- Duplicate/replace tiles as needed -->
+           
+            <figure class="tile"><img src="assets/photo-15.jpg"  alt="Gallery photo 5"  loading="lazy" width="1600" height="1067"></figure>
+            <figure class="tile"><img src="assets/photo-6.jpg"  alt="Gallery photo 6"  loading="lazy" width="1600" height="1067"></figure>
+            <figure class="tile"><img src="assets/photo-7.jpg"  alt="Gallery photo 7"  loading="lazy" width="1600" height="1067"></figure>
+            <figure class="tile"><img src="assets/photo-8.jpg"  alt="Gallery photo 8"  loading="lazy" width="1600" height="1067"></figure>
+            <figure class="tile"><img src="assets/photo-9.jpg"  alt="Gallery photo 9"  loading="lazy" width="1600" height="1067"></figure>
+            <figure class="tile"><img src="assets/photo-10.jpg" alt="Gallery photo 10" loading="lazy" width="1600" height="1067"></figure>
+            <figure class="tile"><img src="assets/photo-5.jpg" alt="Gallery photo 11" loading="lazy" width="1600" height="1067"></figure>
+            <figure class="tile"><img src="assets/photo-12.jpg" alt="Gallery photo 12" loading="lazy" width="1600" height="1067"></figure>
+            <figure class="tile"><img src="assets/photo-13.jpg" alt="Gallery photo 13" loading="lazy" width="1600" height="1067"></figure>
+            <figure class="tile"><img src="assets/photo-14.jpg" alt="Gallery photo 14" loading="lazy" width="1600" height="1067"></figure>
+            <figure class="tile"><img src="assets/photo-11.jpg" alt="Gallery photo 15" loading="lazy" width="1600" height="1067"></figure>
+            <figure class="tile"><img src="assets/photo-16.jpg" alt="Gallery photo 16" loading="lazy" width="1600" height="1067"></figure>
+            
+
+          </div>
+
+          <!-- Side arrows -->
+          <div class="gallery-nav" aria-hidden="true">
+            <button class="gbtn" id="gprev" aria-label="Scroll gallery left">◀</button>
+            <button class="gbtn" id="gnext" aria-label="Scroll gallery right">▶</button>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- ============================== LIGHTBOX ============================== -->
+    <div id="lightbox" class="lightbox" role="dialog" aria-modal="true" aria-label="Image viewer" aria-hidden="true">
+      <img id="lbImg" class="lb-img" alt="Expanded photo" />
+      <!-- New floating X button -->
+      <button class="lb-close" id="lbClose" aria-label="Close image viewer">×</button>
+
+      <div class="lb-ui" aria-hidden="true">
+        <button class="lb-btn" id="prev" aria-label="Previous">◀</button>
+        <button class="lb-btn" id="close" aria-label="Close">✕</button>
+        <button class="lb-btn" id="next" aria-label="Next">▶</button>
+      </div>
+    </div>
+
+    <!-- ============================== FOOTER ============================== -->
+    <footer class="container section" style="padding-top: 0;">
+      <p style="text-align: center; color: var(--color-muted); margin-top: var(--sp-8);">
+        © <span id="y"></span> Abhishek Sarepaka — Photography &amp; hobbies
+      </p>
+    </footer>
+
+    <!-- ============================== SCRIPTS ============================== -->
+    <script defer>
+
+      // ===== Orientation-aware tiles (landscape vs portrait) =====
+(function () {
+  const tiles = document.querySelectorAll('#gallery .tile img');
+
+  function setOrientation(img) {
+    const tile = img.closest('.tile');
+    if (!tile || !img.naturalWidth || !img.naturalHeight) return;
+
+    const ratio = img.naturalWidth / img.naturalHeight;
+    tile.classList.toggle('landscape', ratio >= 1);
+    tile.classList.toggle('portrait', ratio < 1);
+  }
+
+  tiles.forEach((img) => {
+    if (img.complete && img.naturalWidth) {
+      setOrientation(img);
+    } else {
+      img.addEventListener('load', () => setOrientation(img), { once: true });
+    }
+  });
+})();
+
+      // Mobile menu toggle
+      const menuToggle = document.getElementById('menuToggle');
+      const siteNav = document.getElementById('siteNav');
+      if (menuToggle && siteNav) {
+        menuToggle.addEventListener('click', () => {
+          const isOpen = siteNav.classList.toggle('open');
+          siteNav.setAttribute('aria-hidden', String(!isOpen));
+          menuToggle.setAttribute('aria-expanded', String(isOpen));
+        });
+        document.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape' && siteNav.classList.contains('open')) {
+            siteNav.classList.remove('open');
+            siteNav.setAttribute('aria-hidden', 'true');
+            menuToggle.setAttribute('aria-expanded', 'false');
+            menuToggle.focus();
+          }
+        });
+        siteNav.addEventListener('click', (e) => {
+          if (e.target.tagName === 'A' && siteNav.classList.contains('open')) {
+            menuToggle.click();
+          }
+        });
+      }
+
+      // Year
+      document.getElementById('y').textContent = new Date().getFullYear();
+
+      // Scroll reveals
+      if ('IntersectionObserver' in window) {
+        const io = new IntersectionObserver((entries) => {
+          entries.forEach((e) => {
+            if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+          });
+        }, { threshold: 0.16 });
+        document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
+      } else {
+        document.querySelectorAll('.reveal').forEach((el) => el.classList.add('in'));
+      }
+
+      // Lightbox
+      const lb = document.getElementById('lightbox');
+      const lbImg = document.getElementById('lbImg');
+      const lbClose = document.getElementById('lbClose'); // NEW
+      let currentIndex = -1;
+
+      function getAllImgs() {
+        return [...document.querySelectorAll('#gallery img, .featured img')];
+      }
+      function openLightbox(idx) {
+        const imgs = getAllImgs();
+        if (!imgs[idx]) return;
+        currentIndex = idx; lbImg.src = imgs[idx].src;
+        lb.classList.add('open'); lb.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+      }
+      function closeLightbox() {
+        lb.classList.remove('open'); lb.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+      }
+      function next() {
+        const imgs = getAllImgs(); if (!imgs.length) return;
+        currentIndex = (currentIndex + 1) % imgs.length; lbImg.src = imgs[currentIndex].src;
+      }
+      function prev() {
+        const imgs = getAllImgs(); if (!imgs.length) return;
+        currentIndex = (currentIndex - 1 + imgs.length) % imgs.length; lbImg.src = imgs[currentIndex].src;
+      }
+
+      document.addEventListener('click', (e) => {
+        const imgs = getAllImgs();
+        const target = e.target.closest('img');
+        if (!target) return;
+        const inGallery = target.closest('#gallery, .featured');
+        if (!inGallery) return;
+        const idx = imgs.indexOf(target);
+        if (idx > -1) openLightbox(idx);
+      });
+
+      document.getElementById('close').addEventListener('click', closeLightbox);
+      document.getElementById('next').addEventListener('click', next);
+      document.getElementById('prev').addEventListener('click', prev);
+      lbClose.addEventListener('click', closeLightbox); // NEW
+
+      window.addEventListener('keydown', (e) => {
+        if (!lb.classList.contains('open')) return;
+        if (e.key === 'Escape') closeLightbox();
+        if (e.key === 'ArrowRight') next();
+        if (e.key === 'ArrowLeft') prev();
+      });
+      lb.addEventListener('click', (e) => { if (e.target === lb) closeLightbox(); });
+
+      // ============================== GALLERY ARROWS (horizontal scroll) ==============================
+      const gallery = document.getElementById('gallery');
+      const gprev = document.getElementById('gprev');
+      const gnext = document.getElementById('gnext');
+
+      function updateArrowState() {
+        const maxScroll = gallery.scrollWidth - gallery.clientWidth;
+        const atStart = gallery.scrollLeft <= 2;
+        const atEnd = gallery.scrollLeft >= maxScroll - 2;
+        gprev.disabled = atStart;
+        gnext.disabled = atEnd;
+      }
+      function scrollByAmount(dir = 1) {
+        const amount = Math.max(320, Math.round(gallery.clientWidth * 0.9));
+        gallery.scrollBy({ left: dir * amount, behavior: 'smooth' });
+      }
+      gprev.addEventListener('click', () => scrollByAmount(-1));
+      gnext.addEventListener('click', () => scrollByAmount(1));
+      gallery.addEventListener('scroll', updateArrowState);
+      window.addEventListener('resize', updateArrowState);
+      gallery.addEventListener('wheel', (e) => {
+        if (Math.abs(e.deltaX) < Math.abs(e.deltaY) && e.shiftKey) {
+          e.preventDefault();
+          gallery.scrollBy({ left: e.deltaY, behavior: 'auto' });
+        }
+      }, { passive: false });
+
+      // Init
+      updateArrowState();
+    </script>
+  </body>
 </html>
